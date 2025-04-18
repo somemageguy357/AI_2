@@ -1,0 +1,6 @@
+﻿  UIManager.cpp
+  UIText.cpp
+  main.cpp
+C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Locomotion\main.cpp(17,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  Generating Code...
+  Locomotion.vcxproj -> C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Debug\Locomotion.exe
