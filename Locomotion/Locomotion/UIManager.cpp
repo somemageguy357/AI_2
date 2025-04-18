@@ -47,10 +47,14 @@ void CUIManager::InitUI()
 	m_poUIFont = new sf::Font();
 	m_poUIFont->loadFromFile("Fonts/Roboto-Light.ttf");
 
-	CreateButton({ 100, 30 }, { 60, 25 }, CUIButton::EButtonType::AIArrival, "Arrival", true);
-	CreateButton({ 100, 30 }, { 60, 65 }, CUIButton::EButtonType::AIFlock, "Flock", true);
-	CreateButton({ 100, 30 }, { 60, 105 }, CUIButton::EButtonType::AISeek, "Seek", true);
-	CreateButton({ 100, 30 }, { 60, 145 }, CUIButton::EButtonType::AIWander, "Wander", true);
+	CreateText(20, { 60, 20 }, "Behaviours", sf::Color::White, true);
+
+	CreateButton({ 100, 30 }, { 60, 60 }, CUIButton::EButtonType::AIArrival, "Arrival", true);
+	CreateButton({ 100, 30 }, { 60, 100 }, CUIButton::EButtonType::AIFlock, "Flock", true);
+	CreateButton({ 100, 30 }, { 60, 140 }, CUIButton::EButtonType::AISeek, "Seek", true);
+	CreateButton({ 100, 30 }, { 60, 180 }, CUIButton::EButtonType::AIWander, "Wander", true);
+	CreateButton({ 100, 30 }, { 60, 220 }, CUIButton::EButtonType::AISeek, "Unknown", true);
+	CreateButton({ 100, 30 }, { 60, 260 }, CUIButton::EButtonType::AIWander, "Unknown", true);
 }
 
 sf::Font* CUIManager::GetUIFont()
@@ -85,8 +89,8 @@ void CUIManager::CreateButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, 
 	m_oVecButtonPtrs.push_back(poButton);
 }
 
-void CUIManager::CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, bool _bEnabled)
+void CUIManager::CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, bool _bEnabled)
 {
-	CUIText* poText = new CUIText(_uiFontSize, _v2fPosition, _sTextString, _bEnabled);
+	CUIText* poText = new CUIText(_uiFontSize, _v2fPosition, _sTextString, _oColour, _bEnabled);
 	m_oVecTextPtrs.push_back(poText);
 }

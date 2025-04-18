@@ -27,6 +27,8 @@ public:
 		AIFlock,
 	};
 
+	CUIButton() = delete;
+
 	/// <summary>
 	/// Creates a UI button element.
 	/// </summary>

@@ -13,12 +13,17 @@ Mail : Connor.Galvin@mds.ac.nz
 #pragma once
 #include "WindowManager.h"
 #include "UIManager.h"
+#include "AgentManager.h"
 
 void main()
 {
+	srand(time(NULL));
+
 	sf::RenderWindow* poMainWindow = CWindowManager::GetWindow({ 1280, 720 });
 
 	CUIManager::InitUI();
+
+	CAgentManager::GetInstance()->SpawnAgents(2);
 
 	while (poMainWindow != nullptr && poMainWindow->isOpen() == true)
 	{
@@ -42,10 +47,14 @@ void main()
 		if (poMainWindow != nullptr)
 		{
 			poMainWindow->clear();
-
+			
+			//----------UPDATE----------
 			CUIManager::Update(bIsClicking);
+			CAgentManager::GetInstance()->Update();
 
+			//----------RENDER----------
 			CUIManager::Render();
+			CAgentManager::GetInstance()->Render();
 
 			poMainWindow->display();
 		}

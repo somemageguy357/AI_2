@@ -14,10 +14,10 @@ Mail : Connor.Galvin@mds.ac.nz
 #include "WindowManager.h"
 #include "UIManager.h"
 
-CUIText::CUIText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, bool _bEnabled)
+CUIText::CUIText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, bool _bEnabled)
 {
 	m_oText.setFont(*CUIManager::GetUIFont());
-	m_oText.setFillColor(sf::Color::Black);
+	m_oText.setFillColor(_oColour);
 	m_oText.setCharacterSize(_uiFontSize);
 	m_oText.setString(_sTextString);
 

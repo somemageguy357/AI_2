@@ -12,6 +12,7 @@ Mail : Connor.Galvin@mds.ac.nz
 
 #include "UIButton.h"
 #include "WindowManager.h"
+#include "AgentManager.h"
 
 CUIButton::CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, bool _bEnabled)
 {
@@ -22,7 +23,7 @@ CUIButton::CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonTy
 {
 	SetupButton(_v2fSize, _v2fPosition, _eButtonType, _bEnabled);
 
-	m_poButtonText = new CUIText(20, _v2fPosition, _sButtonText, _bEnabled);
+	m_poButtonText = new CUIText(20, _v2fPosition, _sButtonText, sf::Color::Black, _bEnabled);
 }
 
 CUIButton::~CUIButton() 
@@ -89,7 +90,7 @@ void CUIButton::OnClick()
 {
 	if (m_eButtonType == EButtonType::AIArrival)
 	{
-
+		CAgentManager::GetInstance()->SpawnAgents(CAgentManager::GetInstance()->GetAgents()->size()); //temp refresh
 	}
 
 	else if (m_eButtonType == EButtonType::AIFlock)

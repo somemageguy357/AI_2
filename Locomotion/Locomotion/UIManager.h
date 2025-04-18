@@ -77,8 +77,9 @@ private:
 	/// <param name="_uiFontSize:">The font size of the text.</param>
 	/// <param name="_v2fPosition:">The position of the text (center-aligned).</param>
 	/// <param name="_sTextString:">The string of the text element.</param>
+	/// <param name="_oColour:">The colour of the text element.</param>
 	/// <param name="_bEnabled:">Allows for updating and rendering if true.</param>
-	static void CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, bool _bEnabled);
+	static void CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, bool _bEnabled);
 
 	CUIManager() = delete;
 	~CUIManager() = delete;
