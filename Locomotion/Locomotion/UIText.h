@@ -12,9 +12,10 @@ Mail : Connor.Galvin@mds.ac.nz
 
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "UIElement.h"
 
 //A UI element that displays text to the window.
-class CUIText
+class CUIText : public CUIElement
 {
 public:
 	CUIText() = delete;
@@ -42,12 +43,6 @@ public:
 	void Render();
 
 	/// <summary>
-	/// Enables/disables the button which determines if its Update() and Render() functions should perform.
-	/// </summary>
-	/// <param name="_bEnabled:">The new enabled state of the text.</param>
-	void SetEnabled(bool _bEnabled);
-
-	/// <summary>
 	/// Sets the string of the text to the given value.
 	/// </summary>
 	/// <param name="_sTextString:">The new value for the text element.</param>
@@ -55,6 +50,4 @@ public:
 
 private:
 	sf::Text m_oText;
-
-	bool m_bEnabled = true;
 };

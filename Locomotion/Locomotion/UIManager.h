@@ -13,7 +13,6 @@ Mail : Connor.Galvin@mds.ac.nz
 #pragma once
 #include <vector>
 #include "UIButton.h"
-#include "UIText.h"
 
 //Static class that handles all UI elements and runs their Update and Render functions.
 class CUIManager
@@ -47,8 +46,8 @@ public:
 	static void Destroy();
 
 private:
+	static std::vector<CUIElement*> m_oVecUIElementPtrs;
 	static std::vector<CUIButton*> m_oVecButtonPtrs;
-	static std::vector<CUIText*> m_oVecTextPtrs;
 
 	static sf::Font* m_poUIFont;
 

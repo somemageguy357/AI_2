@@ -3,45 +3,68 @@
 #include "WindowManager.h"
 #include "Math.h"
 
+bool CGizmos::m_bEnabled = false;
+
 void CGizmos::Update(CAgent* _poOwningAgent, std::vector<CAgent*>* _poVecAgentPtrs)
 {
-	for (size_t i = 0; i < _poVecAgentPtrs->size(); i++)
+	if (m_bEnabled == true)
 	{
-		i is counting up when skipping 'this' below. need to fix. 
-		if (m_oVecLinePtrs.size() < _poVecAgentPtrs->size())
+		if (m_oVecLinePtrs.size() < _poVecAgentPtrs->size() - 1)
 		{
-			CreateLine();
+			for (size_t i = m_oVecLinePtrs.size(); i < _poVecAgentPtrs->size() - 1; i++)
+			{
+				CreateLine();
+			}
 		}
 
-		if ((*_poVecAgentPtrs)[i] != _poOwningAgent)
+		int iLine = 0;
+
+		for (size_t iCycle = 0; iCycle < _poVecAgentPtrs->size(); iCycle++)
 		{
-			RepositionLine(m_oVecLinePtrs[i], _poOwningAgent->GetPosition(), (*_poVecAgentPtrs)[i]->GetPosition());
+			if ((*_poVecAgentPtrs)[iCycle] != _poOwningAgent)
+			{
+				RepositionLine(m_oVecLinePtrs[iLine], _poOwningAgent->GetPosition(), (*_poVecAgentPtrs)[iCycle]->GetPosition());
+				iLine += 1;
+			}
 		}
 	}
 }
 
 void CGizmos::Render()
 {
-	for (size_t i = 0; i < m_oVecLinePtrs.size(); i++)
+	if (m_bEnabled == true)
 	{
-		CWindowManager::GetWindow()->draw(*m_oVecLinePtrs[i]);
-	}
+		for (size_t i = 0; i < m_oVecLinePtrs.size(); i++)
+		{
+			CWindowManager::GetWindow()->draw(*m_oVecLinePtrs[i]);
+		}
 
-	for (size_t i = 0; i < m_oVecCirclePtrs.size(); i++)
-	{
-		CWindowManager::GetWindow()->draw(*m_oVecCirclePtrs[i]);
+		for (size_t i = 0; i < m_oVecCirclePtrs.size(); i++)
+		{
+			CWindowManager::GetWindow()->draw(*m_oVecCirclePtrs[i]);
+		}
 	}
+}
+
+void CGizmos::ToggleGizmos()
+{
+	m_bEnabled = !m_bEnabled;
+}
+
+bool CGizmos::GetGizmosEnabled()
+{
+	return m_bEnabled;
 }
 
 void CGizmos::CreateLine()
 {
-	sf::RectangleShape* poLine = new sf::RectangleShape({2.0f, 50.0f});
+	sf::RectangleShape* poLine = new sf::RectangleShape();
 	poLine->setFillColor(sf::Color::Green);
 
 	poLine->setOrigin
 	(
-		poLine->getGlobalBounds().left + (poLine->getGlobalBounds().width / 2),
-		poLine->getGlobalBounds().top + (poLine->getGlobalBounds().height / 2)
+		poLine->getGlobalBounds().left,
+		poLine->getGlobalBounds().height / 2
 	);
 
 	m_oVecLinePtrs.push_back(poLine);
@@ -54,14 +77,14 @@ void CGizmos::CreateCircle()
 
 void CGizmos::RepositionLine(sf::RectangleShape* _poLine, sf::Vector2f _v2fStart, sf::Vector2f _v2fEnd)
 {
-	//_poLine->setSize({ 1.0f, CMath::Distance(_v2fStart, _v2fEnd) });
+	_poLine->setSize({ CMath::Distance(_v2fStart, _v2fEnd), 0.5f });
 
-	_poLine->setPosition(CMath::CenterPoint(_v2fStart, _v2fEnd));
+	_poLine->setPosition(_v2fStart);
 
-	float fAdjacent = CMath::Abs(_v2fStart.x - _v2fEnd.x);
-	float fYOpposite = CMath::Abs(_v2fStart.y - _v2fEnd.y);
+	float fX = _v2fEnd.x - _v2fStart.x;
+	float fY = _v2fEnd.y - _v2fStart.y;
 
-	_poLine->setRotation(atan(fYOpposite / fAdjacent) * (180 / CMath::PI()));
+	_poLine->setRotation(atan2(fY, fX) * (180 / CMath::PI()));
 }
 
 void CGizmos::RepositionCircle(sf::Vector2f _v2fPosition, float _fRadius)

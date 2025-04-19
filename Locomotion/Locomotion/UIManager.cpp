@@ -12,33 +12,30 @@ Mail : Connor.Galvin@mds.ac.nz
 
 #include "UIManager.h"
 
+std::vector<CUIElement*> CUIManager::m_oVecUIElementPtrs;
 std::vector<CUIButton*> CUIManager::m_oVecButtonPtrs;
-std::vector<CUIText*> CUIManager::m_oVecTextPtrs;
+
 sf::Font* CUIManager::m_poUIFont = nullptr;
 
 void CUIManager::Update(bool _bIsClicking)
 {
-	for (size_t i = 0; i < m_oVecButtonPtrs.size(); i++)
+	for (size_t i = 0; i < m_oVecUIElementPtrs.size(); i++)
 	{
-		m_oVecButtonPtrs[i]->Update(_bIsClicking);
+		m_oVecUIElementPtrs[i]->Update();
 	}
 
-	for (size_t i = 0; i < m_oVecTextPtrs.size(); i++)
+	for (size_t i = 0; i < m_oVecButtonPtrs.size(); i++)
 	{
-		m_oVecTextPtrs[i]->Update();
+		m_oVecButtonPtrs[i]->CheckMouseOverlap(_bIsClicking);
 	}
+
 }
 
 void CUIManager::Render()
 {
-	for (size_t i = 0; i < m_oVecButtonPtrs.size(); i++)
+	for (size_t i = 0; i < m_oVecUIElementPtrs.size(); i++)
 	{
-		m_oVecButtonPtrs[i]->Render();
-	}
-
-	for (size_t i = 0; i < m_oVecTextPtrs.size(); i++)
-	{
-		m_oVecTextPtrs[i]->Render();
+		m_oVecUIElementPtrs[i]->Render();
 	}
 }
 
@@ -48,13 +45,15 @@ void CUIManager::InitUI()
 	m_poUIFont->loadFromFile("Fonts/Roboto-Light.ttf");
 
 	CreateText(20, { 60, 20 }, "Behaviours", sf::Color::White, true);
-
 	CreateButton({ 100, 30 }, { 60, 60 }, CUIButton::EButtonType::AIArrival, "Arrival", true);
 	CreateButton({ 100, 30 }, { 60, 100 }, CUIButton::EButtonType::AIFlock, "Flock", true);
 	CreateButton({ 100, 30 }, { 60, 140 }, CUIButton::EButtonType::AISeek, "Seek", true);
 	CreateButton({ 100, 30 }, { 60, 180 }, CUIButton::EButtonType::AIWander, "Wander", true);
-	CreateButton({ 100, 30 }, { 60, 220 }, CUIButton::EButtonType::AISeek, "Unknown", true);
-	CreateButton({ 100, 30 }, { 60, 260 }, CUIButton::EButtonType::AIWander, "Unknown", true);
+	CreateButton({ 100, 30 }, { 60, 220 }, CUIButton::EButtonType::n, "NULL", true);
+	CreateButton({ 100, 30 }, { 60, 260 }, CUIButton::EButtonType::n, "NULL", true);
+
+	CreateText(20, { 60, 320 }, "Gizmos", sf::Color::White, true);
+	CreateButton({ 100, 30 }, { 60, 360 }, CUIButton::EButtonType::ToggleGizmos, "Enable", true);
 }
 
 sf::Font* CUIManager::GetUIFont()
@@ -64,14 +63,9 @@ sf::Font* CUIManager::GetUIFont()
 
 void CUIManager::Destroy()
 {
-	for (size_t i = 0; i < m_oVecButtonPtrs.size(); i++)
+	for (size_t i = 0; i < m_oVecUIElementPtrs.size(); i++)
 	{
-		delete m_oVecButtonPtrs[i];
-	}
-
-	for (size_t i = 0; i < m_oVecTextPtrs.size(); i++)
-	{
-		delete m_oVecTextPtrs[i];
+		delete m_oVecUIElementPtrs[i];
 	}
 
 	delete m_poUIFont;
@@ -81,16 +75,18 @@ void CUIManager::CreateButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, 
 {
 	CUIButton* poButton = new CUIButton(_v2fSize, _v2fPosition, _eButtonType, _bEnabled);
 	m_oVecButtonPtrs.push_back(poButton);
+	m_oVecUIElementPtrs.push_back(poButton);
 }
 
 void CUIManager::CreateButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, CUIButton::EButtonType _eButtonType, std::string _sButtonText, bool _bEnabled)
 {
 	CUIButton* poButton = new CUIButton(_v2fSize, _v2fPosition, _eButtonType, _sButtonText, _bEnabled);
 	m_oVecButtonPtrs.push_back(poButton);
+	m_oVecUIElementPtrs.push_back(poButton);
 }
 
 void CUIManager::CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, bool _bEnabled)
 {
 	CUIText* poText = new CUIText(_uiFontSize, _v2fPosition, _sTextString, _oColour, _bEnabled);
-	m_oVecTextPtrs.push_back(poText);
+	m_oVecUIElementPtrs.push_back(poText);
 }

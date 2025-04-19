@@ -15,16 +15,20 @@ Mail : Connor.Galvin@mds.ac.nz
 #include "UIText.h"
 
 //A UI element that is displayed to the window and performs events when clicked.
-class CUIButton
+class CUIButton : public CUIElement
 {
 public:
 	//The type of event to perform when the button is clicked.
 	enum class EButtonType
 	{
+		n,
+
 		AISeek,
 		AIWander,
 		AIArrival,
 		AIFlock,
+
+		ToggleGizmos,
 	};
 
 	CUIButton() = delete;
@@ -55,30 +59,25 @@ public:
 	/// the button and its left button is being clicked.
 	/// </summary>
 	/// <param name="_bIsClicking:">True if the left mouse button is down. Allows for the button's OnClick() event to be performed.</param>
-	void Update(bool _bIsClicking);
+	void CheckMouseOverlap(bool _bIsClicking);
+
+	/// <summary>
+	/// If enabled: checks for mouse overlap and performs the button's OnClick() event if the mouse is overlapping
+	/// the button and its left button is being clicked.
+	/// </summary>
+	void Update() override;
 
 	/// <summary>
 	/// If enabled: renders the button and its text element (if it has one) to the render window.
 	/// </summary>
-	void Render();
-
-	/// <summary>
-	/// Enables/disables the button which determines if its Update() and Render() functions should perform.
-	/// </summary>
-	/// <param name="_bEnabled:">The new enabled state of the button.</param>
-	void SetEnabled(bool _bEnabled);
+	void Render() override;
 
 private:
-	bool m_bEnabled;
-
 	sf::RectangleShape m_oButtonShape;
 
 	CUIText* m_poButtonText = nullptr;
 
 	EButtonType m_eButtonType;
-
-	//Determines if the mouse is overlapping the button's bounds and calls OnClick() if the left mouse button is down.
-	void CheckMouseOverlap(bool _bIsClicking);
 
 	//Performs the click event of the button, determined by its EButtonType.
 	void OnClick();

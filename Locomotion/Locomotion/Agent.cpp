@@ -11,8 +11,8 @@ CAgent::CAgent()
 
 	m_oShape.setOrigin
 	(
-		m_oShape.getGlobalBounds().left + (m_oShape.getGlobalBounds().width / 2),
-		m_oShape.getGlobalBounds().top + (m_oShape.getGlobalBounds().height / 2)
+		m_oShape.getGlobalBounds().width / 2,
+		m_oShape.getGlobalBounds().height / 2
 	);
 
 	//m_oShape.setPosition(_v2fStartPosition);
@@ -28,8 +28,8 @@ CAgent::CAgent(sf::Vector2f _v2fStartPosition)
 
 	m_oShape.setOrigin
 	(
-		m_oShape.getGlobalBounds().left + (m_oShape.getGlobalBounds().width / 2),
-		m_oShape.getGlobalBounds().top + (m_oShape.getGlobalBounds().height / 2)
+		m_oShape.getGlobalBounds().width / 2,
+		m_oShape.getGlobalBounds().height / 2
 	);
 
 	m_oShape.setPosition(_v2fStartPosition);

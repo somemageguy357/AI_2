@@ -14,9 +14,15 @@ public:
 
 	void Render();
 
+	static void ToggleGizmos();
+
+	static bool GetGizmosEnabled();
+
 private:
 	std::vector<sf::RectangleShape*> m_oVecLinePtrs;
 	std::vector<sf::CircleShape*> m_oVecCirclePtrs;
+
+	static bool m_bEnabled;
 
 	void CreateLine();
 

@@ -21,11 +21,7 @@ CUIText::CUIText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::strin
 	m_oText.setCharacterSize(_uiFontSize);
 	m_oText.setString(_sTextString);
 
-	m_oText.setOrigin
-	(
-		m_oText.getGlobalBounds().left + (m_oText.getGlobalBounds().width / 2), 
-		m_oText.getGlobalBounds().top + (m_oText.getGlobalBounds().height / 2) 
-	);
+	m_oText.setOrigin(m_oText.getGlobalBounds().width / 2, m_oText.getGlobalBounds().height / 2);
 
 	m_oText.setPosition(_v2fPosition);
 
@@ -44,22 +40,13 @@ void CUIText::Render()
 	}
 }
 
-void CUIText::SetEnabled(bool _bEnabled)
-{
-	m_bEnabled = _bEnabled;
-}
-
 void CUIText::SetString(std::string _sTextString)
 {
 	sf::Vector2f v2fPosition = m_oText.getPosition();
 
 	m_oText.setString(_sTextString);
 
-	m_oText.setOrigin
-	(
-		m_oText.getGlobalBounds().left + (m_oText.getGlobalBounds().width / 2),
-		m_oText.getGlobalBounds().top + (m_oText.getGlobalBounds().height / 2)
-	);
+	m_oText.setOrigin(m_oText.getGlobalBounds().width / 2, m_oText.getGlobalBounds().height / 2);
 
 	m_oText.setPosition(v2fPosition);
 }

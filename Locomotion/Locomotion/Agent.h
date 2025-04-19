@@ -2,8 +2,6 @@
 #include "SFML/Graphics.hpp"
 #include "Gizmos.h"
 
-class CAgentManager; //forward declaration.
-
 class CAgent
 {
 public:

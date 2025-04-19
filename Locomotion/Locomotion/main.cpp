@@ -23,7 +23,7 @@ void main()
 
 	CUIManager::InitUI();
 
-	CAgentManager::GetInstance()->SpawnAgents(2);
+	CAgentManager::GetInstance()->SpawnAgents(5);
 
 	while (poMainWindow != nullptr && poMainWindow->isOpen() == true)
 	{
