@@ -26,3 +26,20 @@ float CMath::PI()
 {
 	return 3.14159f;
 }
+
+float CMath::Clamp(float _fValue, float _fMin, float _fMax)
+{
+	float fValue = _fValue;
+
+	if (fValue > _fMax)
+	{
+		fValue = _fMax;
+	}
+
+	else if (fValue < _fMin)
+	{
+		fValue = _fMin;
+	}
+
+	return fValue;
+}

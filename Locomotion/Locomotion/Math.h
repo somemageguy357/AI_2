@@ -12,6 +12,8 @@ public:
 
 	static float PI();
 
+	static float Clamp(float _fValue, float _fMin, float _fMax);
+
 private:
 	CMath() = delete;
 	~CMath() = delete;

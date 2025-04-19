@@ -12,20 +12,27 @@ Mail : Connor.Galvin@mds.ac.nz
 
 #include "UIButton.h"
 #include "WindowManager.h"
+#include "UIManager.h"
 #include "AgentManager.h"
 #include "Gizmos.h"
 #include "AgentBehaviourValues.h"
 
-CUIButton::CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, bool _bEnabled)
+CUIButton::CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, EAlignment _eAlignment, bool _bEnabled)
 {
-	SetupButton(_v2fSize, _v2fPosition, _eButtonType, _bEnabled);
+	SetupButton(_v2fSize, _v2fPosition, _eButtonType, _eAlignment, _bEnabled);
 }
 
-CUIButton::CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, std::string _sButtonText, bool _bEnabled)
+CUIButton::CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, EAlignment _eAlignment, unsigned int _uiFontSize, std::string _sButtonText, bool _bEnabled)
 {
-	SetupButton(_v2fSize, _v2fPosition, _eButtonType, _bEnabled);
+	SetupButton(_v2fSize, _v2fPosition, _eButtonType, _eAlignment, _bEnabled);
 
-	m_poButtonText = new CUIText(20, { _v2fPosition.x, _v2fPosition.y - 4 }, _sButtonText, sf::Color::Black, _bEnabled);
+	sf::Vector2f v2fTextPosition = 
+	{
+		m_oButtonShape.getGlobalBounds().left + m_oButtonShape.getGlobalBounds().width / 2, 
+		(m_oButtonShape.getGlobalBounds().top + m_oButtonShape.getGlobalBounds().height / 2) - 4
+	};
+
+	m_poButtonText = new CUIText(_uiFontSize, v2fTextPosition, _sButtonText, sf::Color::Black, EAlignment::CenterMiddle, _bEnabled);
 }
 
 CUIButton::~CUIButton() 
@@ -34,6 +41,8 @@ CUIButton::~CUIButton()
 	{
 		delete m_poButtonText;
 	}
+
+	CUIManager::RemoveFromButtonVector(this);
 }
 
 void CUIButton::Update() {}
@@ -49,6 +58,16 @@ void CUIButton::Render()
 			m_poButtonText->Render();
 		}
 	}
+}
+
+void CUIButton::SetAlignment(EAlignment _eAlignment)
+{
+	SetElementAlignment(&m_oButtonShape, _eAlignment, m_oButtonShape.getPosition());
+}
+
+sf::RectangleShape* CUIButton::GetShape()
+{
+	return &m_oButtonShape;
 }
 
 void CUIButton::CheckMouseOverlap(bool _bIsClicking)
@@ -117,16 +136,45 @@ void CUIButton::OnClick()
 			m_poButtonText->SetString("Enable");
 		}
 	}
+
+	else if (m_eButtonType == EButtonType::DecSeekWeighting)
+	{
+		CAgentBehaviourValues::SetSeekWeighting(CAgentBehaviourValues::GetSeekWeighting() - 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncSeekWeighting)
+	{
+		CAgentBehaviourValues::SetSeekWeighting(CAgentBehaviourValues::GetSeekWeighting() + 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecSeekStrength)
+	{
+		CAgentBehaviourValues::SetSeekStrength(CAgentBehaviourValues::GetSeekStrength() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncSeekStrength)
+	{
+		CAgentBehaviourValues::SetSeekStrength(CAgentBehaviourValues::GetSeekStrength() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecSeekMSF)
+	{
+		CAgentBehaviourValues::SetSeekMaxSteerForce(CAgentBehaviourValues::GetSeekMaxSteerForce() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncSeekMSF)
+	{
+		CAgentBehaviourValues::SetSeekMaxSteerForce(CAgentBehaviourValues::GetSeekMaxSteerForce() + 1.0f);
+	}
 }
 
-void CUIButton::SetupButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, bool _bEnabled)
+void CUIButton::SetupButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, EAlignment _eAlignment, bool _bEnabled)
 {
 	m_oButtonShape.setSize(_v2fSize);
-
-	m_oButtonShape.setOrigin(m_oButtonShape.getGlobalBounds().width / 2, m_oButtonShape.getGlobalBounds().height / 2);
-
-	m_oButtonShape.setPosition(_v2fPosition);
+	SetElementAlignment(&m_oButtonShape, _eAlignment, _v2fPosition);
 	m_oButtonShape.setFillColor(sf::Color::White);
 	m_eButtonType = _eButtonType;
 	m_bEnabled = _bEnabled;
+
+	CUIManager::AddToButtonVector(this);
 }

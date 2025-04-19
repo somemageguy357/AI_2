@@ -1,4 +1,7 @@
 #include "AgentBehaviourValues.h"
+#include "UIManager.h"
+#include "UISeekPanel.h"
+#include "Math.h"
 
 #pragma region Static Variables
 float CAgentBehaviourValues::m_fSeekWeighting = 0.0f;
@@ -106,9 +109,15 @@ void CAgentBehaviourValues::InitFlockBehaviour()
 
 void CAgentBehaviourValues::InitSeekBehaviour()
 {
-	m_fSeekWeighting = 0.0f;
-	m_fSeekStrength = 0.0f;
-	m_fSeekMaxSteerForce = 0.0f;
+	m_fSeekWeighting = 1.0f;
+	m_fSeekStrength = 2.0f;
+	m_fSeekMaxSteerForce = 2.0f;
+
+	CUISeekPanel* poSeekPanel = CUIManager::GetSeekPanel();
+	poSeekPanel->SetEnabled(true);
+	poSeekPanel->SetWeightText(m_fSeekWeighting);
+	poSeekPanel->SetStrengthText(m_fSeekStrength);
+	poSeekPanel->SetMaxSteerForceText(m_fSeekMaxSteerForce);
 }
 
 void CAgentBehaviourValues::InitWanderBehaviour()
@@ -125,7 +134,9 @@ void CAgentBehaviourValues::InitWanderBehaviour()
 
 void CAgentBehaviourValues::SetSeekWeighting(float _fWeighting)
 {
-	m_fSeekWeighting = _fWeighting;
+	m_fSeekWeighting = CMath::Clamp(_fWeighting, 0.0f, 1.0f);
+
+	CUIManager::GetSeekPanel()->SetWeightText(m_fSeekWeighting);
 }
 
 float CAgentBehaviourValues::GetSeekWeighting()
@@ -136,6 +147,8 @@ float CAgentBehaviourValues::GetSeekWeighting()
 void CAgentBehaviourValues::SetSeekStrength(float _fStrength)
 {
 	m_fSeekStrength = _fStrength;
+
+	CUIManager::GetSeekPanel()->SetStrengthText(m_fSeekStrength);
 }
 
 float CAgentBehaviourValues::GetSeekStrength()
@@ -146,6 +159,8 @@ float CAgentBehaviourValues::GetSeekStrength()
 void CAgentBehaviourValues::SetSeekMaxSteerForce(float _fMaxSteerForce)
 {
 	m_fSeekMaxSteerForce = _fMaxSteerForce;
+
+	CUIManager::GetSeekPanel()->SetMaxSteerForceText(m_fSeekMaxSteerForce);
 }
 
 float CAgentBehaviourValues::GetSeekMaxSteerForce()

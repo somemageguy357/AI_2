@@ -29,6 +29,13 @@ public:
 		AIFlock,
 
 		ToggleGizmos,
+
+		IncSeekWeighting,
+		DecSeekWeighting,
+		IncSeekStrength,
+		DecSeekStrength,
+		IncSeekMSF,
+		DecSeekMSF,
 	};
 
 	CUIButton() = delete;
@@ -40,7 +47,7 @@ public:
 	/// <param name="_v2fPosition:">The position of the button (center-aligned).</param>
 	/// <param name="_eButtonType:">Determines what event to perform when clicked.</param>
 	/// <param name="_bEnabled:">Allows for updating and rendering if true.</param>
-	CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, bool _bEnabled);
+	CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, EAlignment _eAlignment, bool _bEnabled);
 
 	/// <summary>
 	/// Creates a UI button element with text in the middle.
@@ -50,7 +57,7 @@ public:
 	/// <param name="_eButtonType:">Determines what event to perform when clicked.</param>
 	/// <param name="_sButtonText:">The text that is displayed on the button.</param>
 	/// <param name="_bEnabled:">Allows for updating and rendering if true.</param>
-	CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, std::string _sButtonText, bool _bEnabled);
+	CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, EAlignment _eAlignment, unsigned int _uiFontSize, std::string _sButtonText, bool _bEnabled);
 
 	~CUIButton();
 
@@ -72,6 +79,10 @@ public:
 	/// </summary>
 	void Render() override;
 
+	void SetAlignment(EAlignment _eAlignment) override;
+
+	sf::RectangleShape* GetShape();
+
 private:
 	sf::RectangleShape m_oButtonShape;
 
@@ -83,5 +94,5 @@ private:
 	void OnClick();
 
 	//Sets up the buttons initial values. Called from the constructors.
-	void SetupButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, bool _bEnabled);
+	void SetupButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, EAlignment _eAlignment, bool _bEnabled);
 };

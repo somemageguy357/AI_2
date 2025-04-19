@@ -13,6 +13,7 @@ Mail : Connor.Galvin@mds.ac.nz
 #pragma once
 #include <vector>
 #include "UIButton.h"
+#include "UISeekPanel.h"
 
 //Static class that handles all UI elements and runs their Update and Render functions.
 class CUIManager
@@ -40,6 +41,12 @@ public:
 	/// <returns></returns>
 	static sf::Font* GetUIFont();
 
+	static void AddToButtonVector(CUIButton* _poButton);
+
+	static void RemoveFromButtonVector(CUIButton* _poButton);
+
+	static CUISeekPanel* GetSeekPanel();
+
 	/// <summary>
 	/// Deletes all UI elements and calls their destructors.
 	/// </summary>
@@ -51,6 +58,8 @@ private:
 
 	static sf::Font* m_poUIFont;
 
+	static CUISeekPanel* m_poSeekPanel;
+
 	/// <summary>
 	/// Creates a UI button element.
 	/// </summary>
@@ -58,7 +67,7 @@ private:
 	/// <param name="_v2fPosition:">The position of the button (center-aligned).</param>
 	/// <param name="_eButtonType:">Determines what event to perform when clicked.</param>
 	/// <param name="_bEnabled:">Allows for updating and rendering if true.</param>
-	static void CreateButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, CUIButton::EButtonType _eButtonType, bool _bEnabled);
+	static void CreateButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, CUIButton::EButtonType _eButtonType, CUIElement::EAlignment _eAlignment, bool _bEnabled);
 
 	/// <summary>
 	/// Creates a UI button element with text in the middle.
@@ -68,7 +77,7 @@ private:
 	/// <param name="_eButtonType:">Determines what event to perform when clicked.</param>
 	/// <param name="_sButtonText:">The text that is displayed on the button.</param>
 	/// <param name="_bEnabled:">Allows for updating and rendering if true.</param>
-	static void CreateButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, CUIButton::EButtonType _eButtonType, std::string _sButtonText, bool _bEnabled);
+	static void CreateButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, CUIButton::EButtonType _eButtonType, CUIElement::EAlignment _eAlignment, unsigned int _uiFontSize, std::string _sButtonText, bool _bEnabled);
 
 	/// <summary>
 	/// Creates a UI text element.
@@ -78,7 +87,7 @@ private:
 	/// <param name="_sTextString:">The string of the text element.</param>
 	/// <param name="_oColour:">The colour of the text element.</param>
 	/// <param name="_bEnabled:">Allows for updating and rendering if true.</param>
-	static void CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, bool _bEnabled);
+	static void CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, CUIElement::EAlignment _eAlignment, bool _bEnabled);
 
 	CUIManager() = delete;
 	~CUIManager() = delete;

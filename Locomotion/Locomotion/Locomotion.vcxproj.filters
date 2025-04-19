@@ -25,6 +25,12 @@
     <Filter Include="Source Files\UI">
       <UniqueIdentifier>{50a2f57f-4360-48fd-ad05-d2dcd3e7dcb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\UI\Panels">
+      <UniqueIdentifier>{4e674416-92ef-4832-9fd2-b25529488234}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI\Panel">
+      <UniqueIdentifier>{6628905a-90fd-431c-9322-87987dd30005}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,6 +66,15 @@
     <ClCompile Include="AgentBehaviourValues.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UIPanel.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UISeekPanel.cpp">
+      <Filter>Source Files\UI\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -90,6 +105,15 @@
       <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="AgentBehaviourValues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIPanel.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UISeekPanel.h">
+      <Filter>Header Files\UI\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

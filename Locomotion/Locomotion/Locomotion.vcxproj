@@ -28,7 +28,10 @@
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UIPanel.cpp" />
+    <ClCompile Include="UISeekPanel.cpp" />
     <ClCompile Include="UIText.cpp" />
+    <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -40,7 +43,10 @@
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIPanel.h" />
+    <ClInclude Include="UISeekPanel.h" />
     <ClInclude Include="UIText.h" />
+    <ClInclude Include="Utilities.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
