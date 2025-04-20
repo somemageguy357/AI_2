@@ -36,6 +36,34 @@ public:
 		DecSeekStrength,
 		IncSeekMSF,
 		DecSeekMSF,
+
+		IncSeparationWeighting,
+		DecSeparationWeighting,
+		IncSeparationStrength,
+		DecSeparationStrength,
+		IncSeparationMSF,
+		DecSeparationMSF,
+		IncSeparationNHR,
+		DecSeparationNHR,
+
+		IncCohesionWeighting,
+		DecCohesionWeighting,
+		IncCohesionStrength,
+		DecCohesionStrength,
+		IncCohesionMSF,
+		DecCohesionMSF,
+		IncCohesionNHR,
+		DecCohesionNHR,
+		ToggleCohesionIncludeSelf,
+
+		IncAlignmentWeighting,
+		DecAlignmentWeighting,
+		IncAlignmentStrength,
+		DecAlignmentStrength,
+		IncAlignmentMSF,
+		DecAlignmentMSF,
+		IncAlignmentNHR,
+		DecAlignmentNHR,
 	};
 
 	CUIButton() = delete;
@@ -82,6 +110,8 @@ public:
 	void SetAlignment(EAlignment _eAlignment) override;
 
 	sf::RectangleShape* GetShape();
+
+	void SetPosition(sf::Vector2f _v2fPosition);
 
 private:
 	sf::RectangleShape m_oButtonShape;

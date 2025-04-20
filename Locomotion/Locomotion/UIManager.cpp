@@ -14,10 +14,15 @@ Mail : Connor.Galvin@mds.ac.nz
 
 std::vector<CUIElement*> CUIManager::m_oVecUIElementPtrs;
 std::vector<CUIButton*> CUIManager::m_oVecButtonPtrs;
+std::vector<CUIPanel*> CUIManager::m_oVecPanelPtrs;
 
 sf::Font* CUIManager::m_poUIFont = nullptr;
 
 CUISeekPanel* CUIManager::m_poSeekPanel = nullptr;
+CUIWanderPanel* CUIManager::m_poWanderPanel = nullptr;
+CUISeparationPanel* CUIManager::m_poSeparationPanel = nullptr;
+CUICohesionPanel* CUIManager::m_poCohesionPanel = nullptr;
+CUIAlignmentPanel* CUIManager::m_poAlignmentPanel = nullptr;
 
 void CUIManager::Update(bool _bIsClicking)
 {
@@ -58,25 +63,22 @@ void CUIManager::InitUI()
 	CreateButton({ 100, 30 }, { 10, 350 }, CUIButton::EButtonType::ToggleGizmos, CUIElement::EAlignment::TopLeft, 20, "Enable", true);
 
 	m_poSeekPanel = new CUISeekPanel({ 0.0f, 510.0f });
-	m_poSeekPanel->SetEnabled(true);
-	m_oVecUIElementPtrs.push_back(m_poSeekPanel);
+	m_poWanderPanel = new CUIWanderPanel({ 0.0f, 510.0f });
+	m_poSeparationPanel = new CUISeparationPanel({ 0.0f, 510.0f });
+	m_poCohesionPanel = new CUICohesionPanel({ 0.0f, 510.0f });
+	m_poAlignmentPanel = new CUIAlignmentPanel({ 0.0f, 510.0f });
 
-	//CreateText(20, { 10, 520 }, "Seek", sf::Color::White, CUIElement::EAlignment::TopLeft, true);
-	//CreateText(14, { 90, 550 }, "Weighting: 100%", sf::Color::White, CUIElement::EAlignment::TopLeft, true);
-	//CreateText(14, { 90, 585 }, "Strength: 100", sf::Color::White, CUIElement::EAlignment::TopLeft, true);
-	//CreateText(14, { 90, 620 }, "Max Steer Force: 100", sf::Color::White, CUIElement::EAlignment::TopLeft, true);
-	//CreateText(14, { 90, 655 }, "Neighbourhood Radius: 100", sf::Color::White, CUIElement::EAlignment::TopLeft, true);
-	//CreateText(14, { 90, 690 }, "Neighbourhood Radius: 100", sf::Color::White, CUIElement::EAlignment::TopLeft, true);
-	//CreateButton({ 30, 20 }, { 10, 550 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 14, "-5%", true);
-	//CreateButton({ 30, 20 }, { 50, 550 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 14, "+5%", true);
-	//CreateButton({ 30, 20 }, { 10, 585 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 14, "-1", true);
-	//CreateButton({ 30, 20 }, { 50, 585 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 14, "+1", true);
-	//CreateButton({ 30, 20 }, { 10, 620 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 14, "-1", true);
-	//CreateButton({ 30, 20 }, { 50, 620 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 14, "+1", true);
-	//CreateButton({ 30, 20 }, { 10, 655 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 14, "-1", true);
-	//CreateButton({ 30, 20 }, { 50, 655 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 14, "+1", true);
-	//CreateButton({ 30, 20 }, { 10, 690 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 14, "-1", true);
-	//CreateButton({ 30, 20 }, { 50, 690 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 14, "+1", true);
+	m_oVecUIElementPtrs.push_back(m_poSeekPanel);
+	m_oVecUIElementPtrs.push_back(m_poWanderPanel);
+	m_oVecUIElementPtrs.push_back(m_poSeparationPanel);
+	m_oVecUIElementPtrs.push_back(m_poCohesionPanel);
+	m_oVecUIElementPtrs.push_back(m_poAlignmentPanel);
+
+	m_oVecPanelPtrs.push_back(m_poSeekPanel);
+	m_oVecPanelPtrs.push_back(m_poWanderPanel);
+	m_oVecPanelPtrs.push_back(m_poSeparationPanel);
+	m_oVecPanelPtrs.push_back(m_poCohesionPanel);
+	m_oVecPanelPtrs.push_back(m_poAlignmentPanel);
 }
 
 sf::Font* CUIManager::GetUIFont()
@@ -101,9 +103,53 @@ void CUIManager::RemoveFromButtonVector(CUIButton* _poButton)
 	}
 }
 
+void CUIManager::CloseAllPanels()
+{
+	m_poSeekPanel->SetEnabled(false);
+	m_poWanderPanel->SetEnabled(false);
+	m_poSeparationPanel->SetEnabled(false);
+	m_poCohesionPanel->SetEnabled(false);
+	m_poAlignmentPanel->SetEnabled(false);
+}
+
 CUISeekPanel* CUIManager::GetSeekPanel()
 {
 	return m_poSeekPanel;
+}
+
+CUIWanderPanel* CUIManager::GetWanderPanel()
+{
+	return m_poWanderPanel;
+}
+
+CUISeparationPanel* CUIManager::GetSeparationPanel()
+{
+	return m_poSeparationPanel;
+}
+
+CUICohesionPanel* CUIManager::GetCohesionPanel()
+{
+	return m_poCohesionPanel;
+}
+
+CUIAlignmentPanel* CUIManager::GetAlignmentPanel()
+{
+	return m_poAlignmentPanel;
+}
+
+void CUIManager::PositionPanels()
+{
+	int iPanelsOpen = 0;
+
+	for (size_t i = 0; i < m_oVecPanelPtrs.size(); i++)
+	{
+		if (m_oVecPanelPtrs[i]->GetEnabled() == true)
+		{
+			m_oVecPanelPtrs[i]->ResetPosition();
+			m_oVecPanelPtrs[i]->RepositionPanel(iPanelsOpen * 300);
+			iPanelsOpen += 1;
+		}
+	}
 }
 
 void CUIManager::Destroy()

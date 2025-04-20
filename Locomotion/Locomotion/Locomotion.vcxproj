@@ -25,12 +25,16 @@
     <ClCompile Include="Gizmos.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="UIAlignmentPanel.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UICohesionPanel.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UIPanel.cpp" />
     <ClCompile Include="UISeekPanel.cpp" />
+    <ClCompile Include="UISeparationPanel.cpp" />
     <ClCompile Include="UIText.cpp" />
+    <ClCompile Include="UIWanderPanel.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
@@ -40,12 +44,16 @@
     <ClInclude Include="AgentManager.h" />
     <ClInclude Include="Gizmos.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="UIAlignmentPanel.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UICohesionPanel.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIPanel.h" />
     <ClInclude Include="UISeekPanel.h" />
+    <ClInclude Include="UISeparationPanel.h" />
     <ClInclude Include="UIText.h" />
+    <ClInclude Include="UIWanderPanel.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>

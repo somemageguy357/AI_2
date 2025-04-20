@@ -70,6 +70,22 @@ sf::RectangleShape* CUIButton::GetShape()
 	return &m_oButtonShape;
 }
 
+void CUIButton::SetPosition(sf::Vector2f _v2fPosition)
+{
+	m_oButtonShape.setPosition(_v2fPosition);
+
+	if (m_poButtonText != nullptr)
+	{
+		sf::Vector2f v2fTextPosition =
+		{
+			m_oButtonShape.getGlobalBounds().left + m_oButtonShape.getGlobalBounds().width / 2,
+			(m_oButtonShape.getGlobalBounds().top + m_oButtonShape.getGlobalBounds().height / 2) - 4
+		};
+
+		m_poButtonText->GetShape()->setPosition(v2fTextPosition);
+	}
+}
+
 void CUIButton::CheckMouseOverlap(bool _bIsClicking)
 {
 	if (m_bEnabled == true)
@@ -101,6 +117,7 @@ void CUIButton::CheckMouseOverlap(bool _bIsClicking)
 
 void CUIButton::OnClick()
 {
+	#pragma region SetAgentBehaviour
 	if (m_eButtonType == EButtonType::AIArrival)
 	{
 		CAgentBehaviourValues::InitBehaviour(CAgentBehaviourValues::EBehaviour::Arrival);
@@ -121,22 +138,10 @@ void CUIButton::OnClick()
 	{
 		CAgentBehaviourValues::InitBehaviour(CAgentBehaviourValues::EBehaviour::Wander);
 	}
+	#pragma endregion
 
-	else if (m_eButtonType == EButtonType::ToggleGizmos)
-	{
-		CGizmos::ToggleGizmos();
-
-		if (CGizmos::GetGizmosEnabled() == true)
-		{
-			m_poButtonText->SetString("Disable");
-		}
-
-		else
-		{
-			m_poButtonText->SetString("Enable");
-		}
-	}
-
+	#pragma region ChangeBehaviourValues
+	//------------------------------------------------------------------------------------------------------------SEEK
 	else if (m_eButtonType == EButtonType::DecSeekWeighting)
 	{
 		CAgentBehaviourValues::SetSeekWeighting(CAgentBehaviourValues::GetSeekWeighting() - 0.05f);
@@ -165,6 +170,150 @@ void CUIButton::OnClick()
 	else if (m_eButtonType == EButtonType::IncSeekMSF)
 	{
 		CAgentBehaviourValues::SetSeekMaxSteerForce(CAgentBehaviourValues::GetSeekMaxSteerForce() + 1.0f);
+	}
+
+	//------------------------------------------------------------------------------------------------------------SEPARATION
+	else if (m_eButtonType == EButtonType::DecSeparationWeighting)
+	{
+		CAgentBehaviourValues::SetSeparationWeighting(CAgentBehaviourValues::GetSeparationWeighting() - 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncSeparationWeighting)
+	{
+		CAgentBehaviourValues::SetSeparationWeighting(CAgentBehaviourValues::GetSeparationWeighting() + 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecSeparationStrength)
+	{
+		CAgentBehaviourValues::SetSeparationStrength(CAgentBehaviourValues::GetSeparationStrength() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncSeparationStrength)
+	{
+		CAgentBehaviourValues::SetSeparationStrength(CAgentBehaviourValues::GetSeparationStrength() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecSeparationMSF)
+	{
+		CAgentBehaviourValues::SetSeparationMaxSteerForce(CAgentBehaviourValues::GetSeparationMaxSteerForce() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncSeparationMSF)
+	{
+		CAgentBehaviourValues::SetSeparationMaxSteerForce(CAgentBehaviourValues::GetSeparationMaxSteerForce() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecSeparationNHR)
+	{
+		CAgentBehaviourValues::SetSeparationNeighbourhoodRadius(CAgentBehaviourValues::GetSeparationNeighbourhoodRadius() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncSeparationNHR)
+	{
+		CAgentBehaviourValues::SetSeparationNeighbourhoodRadius(CAgentBehaviourValues::GetSeparationNeighbourhoodRadius() + 1.0f);
+	}
+
+	//------------------------------------------------------------------------------------------------------------COHESION
+	else if (m_eButtonType == EButtonType::DecCohesionWeighting)
+	{
+		CAgentBehaviourValues::SetCohesionWeighting(CAgentBehaviourValues::GetCohesionWeighting() - 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncCohesionWeighting)
+	{
+		CAgentBehaviourValues::SetCohesionWeighting(CAgentBehaviourValues::GetCohesionWeighting() + 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecCohesionStrength)
+	{
+		CAgentBehaviourValues::SetCohesionStrength(CAgentBehaviourValues::GetCohesionStrength() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncCohesionStrength)
+	{
+		CAgentBehaviourValues::SetCohesionStrength(CAgentBehaviourValues::GetCohesionStrength() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecCohesionMSF)
+	{
+		CAgentBehaviourValues::SetCohesionMaxSteerForce(CAgentBehaviourValues::GetCohesionMaxSteerForce() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncCohesionMSF)
+	{
+		CAgentBehaviourValues::SetCohesionMaxSteerForce(CAgentBehaviourValues::GetCohesionMaxSteerForce() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecCohesionNHR)
+	{
+		CAgentBehaviourValues::SetCohesionNeighbourhoodRadius(CAgentBehaviourValues::GetCohesionNeighbourhoodRadius() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncCohesionNHR)
+	{
+		CAgentBehaviourValues::SetCohesionNeighbourhoodRadius(CAgentBehaviourValues::GetCohesionNeighbourhoodRadius() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::ToggleCohesionIncludeSelf)
+	{
+		CAgentBehaviourValues::SetCohesionIncludeSelf(!CAgentBehaviourValues::GetCohesionIncludeSelf());
+	}
+
+	//------------------------------------------------------------------------------------------------------------ALIGNMENT
+	else if (m_eButtonType == EButtonType::DecAlignmentWeighting)
+	{
+		CAgentBehaviourValues::SetAlignmentWeighting(CAgentBehaviourValues::GetAlignmentWeighting() - 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncAlignmentWeighting)
+	{
+		CAgentBehaviourValues::SetAlignmentWeighting(CAgentBehaviourValues::GetAlignmentWeighting() + 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecAlignmentStrength)
+	{
+		CAgentBehaviourValues::SetAlignmentStrength(CAgentBehaviourValues::GetAlignmentStrength() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncAlignmentStrength)
+	{
+		CAgentBehaviourValues::SetAlignmentStrength(CAgentBehaviourValues::GetAlignmentStrength() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecAlignmentMSF)
+	{
+		CAgentBehaviourValues::SetAlignmentMaxSteerForce(CAgentBehaviourValues::GetAlignmentMaxSteerForce() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncAlignmentMSF)
+	{
+		CAgentBehaviourValues::SetAlignmentMaxSteerForce(CAgentBehaviourValues::GetAlignmentMaxSteerForce() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecAlignmentNHR)
+	{
+		CAgentBehaviourValues::SetAlignmentNeighbourhoodRadius(CAgentBehaviourValues::GetAlignmentNeighbourhoodRadius() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncAlignmentNHR)
+	{
+		CAgentBehaviourValues::SetAlignmentNeighbourhoodRadius(CAgentBehaviourValues::GetAlignmentNeighbourhoodRadius() + 1.0f);
+	}
+	#pragma endregion
+
+	else if (m_eButtonType == EButtonType::ToggleGizmos)
+	{
+		CGizmos::ToggleGizmos();
+
+		if (CGizmos::GetGizmosEnabled() == true)
+		{
+			m_poButtonText->SetString("Disable");
+		}
+
+		else
+		{
+			m_poButtonText->SetString("Enable");
+		}
 	}
 }
 

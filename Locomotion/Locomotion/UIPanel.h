@@ -10,7 +10,9 @@ public:
 
 	void Render() override;
 
-	void RepositionElements(float _fXOffset);
+	void RepositionPanel(float _fXOffset);
+
+	void ResetPosition();
 
 protected:
 	CUIPanel() {};
@@ -24,6 +26,8 @@ protected:
 private:
 	std::vector<CUIButton*> m_oVecButtonPtrs;
 	std::vector<CUIText*> m_oVecTextPtrs;
+
+	float m_fXOffset = 0.0f;
 
 	void SetAlignment(EAlignment _eAlignment) override {};
 };

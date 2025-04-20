@@ -6,33 +6,25 @@
 class CAgentManager
 {
 public:
-	static CAgentManager* GetInstance()
-	{
-		if (m_poInstance == nullptr)
-		{
-			m_poInstance = new CAgentManager();
-		}
+	static void Update();
 
-		return m_poInstance;
-	}
+	static void Render();
 
-	void Update();
+	static void InitAgentManager();
 
-	void Render();
+	static void SpawnAgents(int _iCount);
 
-	void SpawnAgents(int _iCount);
+	static std::vector<CAgent*>* GetAgents();
 
-	std::vector<CAgent*>* GetAgents();
+	static void Destroy();
 
 private:
-	static CAgentManager* m_poInstance;
+	static sf::RectangleShape m_oBoundary;
 
-	sf::RectangleShape m_oBoundary;
+	static std::vector<CAgent*> m_oVecAgentPtrs;
 
-	std::vector<CAgent*> m_oVecAgentPtrs;
+	CAgentManager() = delete;
+	~CAgentManager() = delete;
 
-	CAgentManager();
-	~CAgentManager();
-
-	void PositionAgents(int _iCount);
+	static void PositionAgents(int _iCount);
 };

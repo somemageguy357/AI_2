@@ -32,20 +32,39 @@ void CUIPanel::Render()
 	}
 }
 
-void CUIPanel::RepositionElements(float _fXOffset)
+void CUIPanel::RepositionPanel(float _fXOffset)
 {
+	m_fXOffset = _fXOffset;
+
 	for (size_t i = 0; i < m_oVecButtonPtrs.size(); i++)
 	{
 		sf::Vector2f v2fShapePos = m_oVecButtonPtrs[i]->GetShape()->getPosition();
-
-		m_oVecButtonPtrs[i]->GetShape()->setPosition({ _fXOffset, v2fShapePos.y });
+		
+		m_oVecButtonPtrs[i]->SetPosition({ v2fShapePos.x + m_fXOffset, v2fShapePos.y });
 	}
 
 	for (size_t i = 0; i < m_oVecTextPtrs.size(); i++)
 	{
 		sf::Vector2f v2fShapePos = m_oVecTextPtrs[i]->GetShape()->getPosition();
 
-		m_oVecTextPtrs[i]->GetShape()->setPosition({ _fXOffset, v2fShapePos.y });
+		m_oVecTextPtrs[i]->GetShape()->setPosition({ v2fShapePos.x + m_fXOffset, v2fShapePos.y });
+	}
+}
+
+void CUIPanel::ResetPosition()
+{
+	for (size_t i = 0; i < m_oVecButtonPtrs.size(); i++)
+	{
+		sf::Vector2f v2fShapePos = m_oVecButtonPtrs[i]->GetShape()->getPosition();
+
+		m_oVecButtonPtrs[i]->SetPosition({ v2fShapePos.x - m_fXOffset, v2fShapePos.y });
+	}
+
+	for (size_t i = 0; i < m_oVecTextPtrs.size(); i++)
+	{
+		sf::Vector2f v2fShapePos = m_oVecTextPtrs[i]->GetShape()->getPosition();
+
+		m_oVecTextPtrs[i]->GetShape()->setPosition({ v2fShapePos.x - m_fXOffset, v2fShapePos.y });
 	}
 }
 

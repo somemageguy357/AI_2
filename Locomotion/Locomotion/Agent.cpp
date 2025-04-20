@@ -44,7 +44,7 @@ void CAgent::Update()
 	{
 		//perform behaviour
 
-		m_oGizmos.Update(this, CAgentManager::GetInstance()->GetAgents());
+		m_oGizmos.Update(this, CAgentManager::GetAgents());
 	}
 }
 

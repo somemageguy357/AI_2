@@ -14,6 +14,10 @@ Mail : Connor.Galvin@mds.ac.nz
 #include <vector>
 #include "UIButton.h"
 #include "UISeekPanel.h"
+#include "UIWanderPanel.h"
+#include "UISeparationPanel.h"
+#include "UICohesionPanel.h"
+#include "UIAlignmentPanel.h"
 
 //Static class that handles all UI elements and runs their Update and Render functions.
 class CUIManager
@@ -45,7 +49,19 @@ public:
 
 	static void RemoveFromButtonVector(CUIButton* _poButton);
 
+	static void CloseAllPanels();
+
 	static CUISeekPanel* GetSeekPanel();
+
+	static CUIWanderPanel* GetWanderPanel();
+
+	static CUISeparationPanel* GetSeparationPanel();
+
+	static CUICohesionPanel* GetCohesionPanel();
+
+	static CUIAlignmentPanel* GetAlignmentPanel();
+
+	static void PositionPanels();
 
 	/// <summary>
 	/// Deletes all UI elements and calls their destructors.
@@ -55,10 +71,15 @@ public:
 private:
 	static std::vector<CUIElement*> m_oVecUIElementPtrs;
 	static std::vector<CUIButton*> m_oVecButtonPtrs;
+	static std::vector<CUIPanel*> m_oVecPanelPtrs;
 
 	static sf::Font* m_poUIFont;
 
 	static CUISeekPanel* m_poSeekPanel;
+	static CUIWanderPanel* m_poWanderPanel;
+	static CUISeparationPanel* m_poSeparationPanel;
+	static CUICohesionPanel* m_poCohesionPanel;
+	static CUIAlignmentPanel* m_poAlignmentPanel;
 
 	/// <summary>
 	/// Creates a UI button element.

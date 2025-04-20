@@ -31,6 +31,24 @@
     <Filter Include="Header Files\UI\Panel">
       <UniqueIdentifier>{6628905a-90fd-431c-9322-87987dd30005}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utility">
+      <UniqueIdentifier>{3bb56fa0-a461-4bd6-9e28-2a68d085a8af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{4773d6fa-3f78-4d57-8562-19275dcc7b4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{f8ab3a00-a405-4840-9956-409e2052c953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Misc">
+      <UniqueIdentifier>{ee93c669-f24b-4353-954b-447d406c66f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Agents">
+      <UniqueIdentifier>{0598fdda-976f-412e-aaf1-238cd494094f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Agent">
+      <UniqueIdentifier>{b2f06a1a-74ec-4c07-91cb-194c9b6a56f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,23 +66,11 @@
     <ClCompile Include="UIText.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Gizmos.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Agent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AgentManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Math.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UIElement.cpp">
       <Filter>Source Files\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="AgentBehaviourValues.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UIPanel.cpp">
       <Filter>Source Files\UI</Filter>
@@ -72,8 +78,32 @@
     <ClCompile Include="UISeekPanel.cpp">
       <Filter>Source Files\UI\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
     <ClCompile Include="Utilities.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Gizmos.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Agent.cpp">
+      <Filter>Source Files\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="AgentBehaviourValues.cpp">
+      <Filter>Source Files\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="UIWanderPanel.cpp">
+      <Filter>Source Files\UI\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="UISeparationPanel.cpp">
+      <Filter>Source Files\UI\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="UICohesionPanel.cpp">
+      <Filter>Source Files\UI\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAlignmentPanel.cpp">
+      <Filter>Source Files\UI\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,23 +119,11 @@
     <ClInclude Include="UIText.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Gizmos.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Agent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AgentManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Math.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UIElement.h">
       <Filter>Header Files\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="AgentBehaviourValues.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UIPanel.h">
       <Filter>Header Files\UI</Filter>
@@ -113,8 +131,32 @@
     <ClInclude Include="UISeekPanel.h">
       <Filter>Header Files\UI\Panel</Filter>
     </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
     <ClInclude Include="Utilities.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Gizmos.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Agent.h">
+      <Filter>Header Files\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="AgentBehaviourValues.h">
+      <Filter>Header Files\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWanderPanel.h">
+      <Filter>Header Files\UI\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="UISeparationPanel.h">
+      <Filter>Header Files\UI\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="UICohesionPanel.h">
+      <Filter>Header Files\UI\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAlignmentPanel.h">
+      <Filter>Header Files\UI\Panel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

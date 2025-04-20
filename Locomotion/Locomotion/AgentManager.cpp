@@ -1,26 +1,8 @@
 #include "AgentManager.h"
 #include "WindowManager.h"
 
-CAgentManager* CAgentManager::m_poInstance = nullptr;
-
-CAgentManager::CAgentManager() 
-{
-	m_oBoundary.setFillColor(sf::Color::Transparent);
-	m_oBoundary.setOutlineColor(sf::Color::Red);
-	m_oBoundary.setOutlineThickness(-1.0f);
-
-	sf::Vector2f v2fWindowSize = { (float)CWindowManager::GetWindow()->getSize().x, (float)CWindowManager::GetWindow()->getSize().y };
-	m_oBoundary.setSize({ v2fWindowSize.x - 130.0f, v2fWindowSize.y - 220 });
-	m_oBoundary.setPosition({ 120.0f, 10.0f });
-}
-
-CAgentManager::~CAgentManager() 
-{
-	for (size_t i = 0; i < m_oVecAgentPtrs.size(); i++)
-	{
-		delete m_oVecAgentPtrs[i];
-	}
-}
+sf::RectangleShape CAgentManager::m_oBoundary;
+std::vector<CAgent*> CAgentManager::m_oVecAgentPtrs;
 
 void CAgentManager::Update()
 {
@@ -38,6 +20,17 @@ void CAgentManager::Render()
 	}
 
 	CWindowManager::GetWindow()->draw(m_oBoundary);
+}
+
+void CAgentManager::InitAgentManager()
+{
+	m_oBoundary.setFillColor(sf::Color::Transparent);
+	m_oBoundary.setOutlineColor(sf::Color::Red);
+	m_oBoundary.setOutlineThickness(-1.0f);
+
+	sf::Vector2f v2fWindowSize = { (float)CWindowManager::GetWindow()->getSize().x, (float)CWindowManager::GetWindow()->getSize().y };
+	m_oBoundary.setSize({ v2fWindowSize.x - 130.0f, v2fWindowSize.y - 220 });
+	m_oBoundary.setPosition({ 120.0f, 10.0f });
 }
 
 void CAgentManager::SpawnAgents(int _iCount)
@@ -62,6 +55,14 @@ void CAgentManager::SpawnAgents(int _iCount)
 std::vector<CAgent*>* CAgentManager::GetAgents()
 {
 	return &m_oVecAgentPtrs;
+}
+
+void CAgentManager::Destroy()
+{
+	for (size_t i = 0; i < m_oVecAgentPtrs.size(); i++)
+	{
+		delete m_oVecAgentPtrs[i];
+	}
 }
 
 void CAgentManager::PositionAgents(int _iCount)

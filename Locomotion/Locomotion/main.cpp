@@ -22,8 +22,7 @@ void main()
 	sf::RenderWindow* poMainWindow = CWindowManager::GetWindow({ 1280, 720 });
 
 	CUIManager::InitUI();
-
-	CAgentManager::GetInstance()->SpawnAgents(5);
+	CAgentManager::InitAgentManager();
 
 	while (poMainWindow != nullptr && poMainWindow->isOpen() == true)
 	{
@@ -50,15 +49,16 @@ void main()
 			
 			//----------UPDATE----------
 			CUIManager::Update(bIsClicking);
-			CAgentManager::GetInstance()->Update();
+			CAgentManager::Update();
 
 			//----------RENDER----------
 			CUIManager::Render();
-			CAgentManager::GetInstance()->Render();
+			CAgentManager::Render();
 
 			poMainWindow->display();
 		}
 	}
 
+	CAgentManager::Destroy();
 	CUIManager::Destroy();
 }
