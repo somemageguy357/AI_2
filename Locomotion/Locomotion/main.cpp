@@ -14,6 +14,8 @@ Mail : Connor.Galvin@mds.ac.nz
 #include "WindowManager.h"
 #include "UIManager.h"
 #include "AgentManager.h"
+#include "TimeManager.h"
+#include "MouseCircle.h"
 
 void main()
 {
@@ -48,11 +50,14 @@ void main()
 			poMainWindow->clear();
 			
 			//----------UPDATE----------
+			CTimeManager::Update();
 			CUIManager::Update(bIsClicking);
+			CMouseCircle::GetInstance()->Update();
 			CAgentManager::Update();
 
 			//----------RENDER----------
 			CUIManager::Render();
+			CMouseCircle::GetInstance()->Render();
 			CAgentManager::Render();
 
 			poMainWindow->display();

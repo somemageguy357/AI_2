@@ -168,8 +168,8 @@ void CAgentBehaviourValues::InitFlockBehaviour()
 void CAgentBehaviourValues::InitSeekBehaviour()
 {
 	m_fSeekWeighting = 1.0f;
-	m_fSeekStrength = 2.0f;
-	m_fSeekMaxSteerForce = 2.0f;
+	m_fSeekStrength = 8.0f;
+	m_fSeekMaxSteerForce = 1.0f;
 
 	CUISeekPanel* poSeekPanel = CUIManager::GetSeekPanel();
 	poSeekPanel->SetEnabled(true);

@@ -57,6 +57,11 @@ std::vector<CAgent*>* CAgentManager::GetAgents()
 	return &m_oVecAgentPtrs;
 }
 
+sf::RectangleShape* CAgentManager::GetBoundary()
+{
+	return &m_oBoundary;
+}
+
 void CAgentManager::Destroy()
 {
 	for (size_t i = 0; i < m_oVecAgentPtrs.size(); i++)

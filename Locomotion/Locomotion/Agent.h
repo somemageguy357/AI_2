@@ -25,5 +25,15 @@ private:
 
 	CGizmos m_oGizmos;
 
+	float m_fSpeed = 200.0f;
+	sf::Vector2f m_v2fMoveDir;
+	sf::Vector2f m_v2fSeekDesiredVelocity;
+
 	bool m_bEnabled = true;
+
+	void Seek();
+
+	void Translate();
+
+	void CheckBoundary();
 };

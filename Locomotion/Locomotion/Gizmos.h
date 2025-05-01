@@ -18,6 +18,8 @@ public:
 
 	static bool GetGizmosEnabled();
 
+	void Seek(sf::Vector2f _v2fPosition, sf::Vector2f _v2fVelocity, sf::Vector2f _v2fSeekDesiredVelocity);
+
 private:
 	std::vector<sf::RectangleShape*> m_oVecLinePtrs;
 	std::vector<sf::CircleShape*> m_oVecCirclePtrs;

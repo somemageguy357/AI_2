@@ -16,6 +16,8 @@ public:
 
 	static std::vector<CAgent*>* GetAgents();
 
+	static sf::RectangleShape* GetBoundary();
+
 	static void Destroy();
 
 private:

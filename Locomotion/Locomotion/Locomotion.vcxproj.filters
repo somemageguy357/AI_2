@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Agent">
       <UniqueIdentifier>{b2f06a1a-74ec-4c07-91cb-194c9b6a56f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Objects">
+      <UniqueIdentifier>{d63a63a5-ee95-4c05-a86b-af9baedd04a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{ef3323d5-ab99-4e52-84a3-791ee2bbd074}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -105,6 +111,12 @@
     <ClCompile Include="UIAlignmentPanel.cpp">
       <Filter>Source Files\UI\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseCircle.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -157,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="UIAlignmentPanel.h">
       <Filter>Header Files\UI\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseCircle.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

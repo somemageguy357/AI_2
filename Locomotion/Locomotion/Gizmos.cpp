@@ -56,6 +56,21 @@ bool CGizmos::GetGizmosEnabled()
 	return m_bEnabled;
 }
 
+void CGizmos::Seek(sf::Vector2f _v2fPosition, sf::Vector2f _v2fVelocity, sf::Vector2f _v2fSeekDesiredVelocity)
+{
+	if (m_bEnabled == true)
+	{
+		while (m_oVecLinePtrs.size() < 2)
+		{
+			CreateLine();
+		}
+
+		RepositionLine(m_oVecLinePtrs[0], _v2fPosition, _v2fPosition + CMath::Normalize(_v2fVelocity) * 100.0f);
+		RepositionLine(m_oVecLinePtrs[1], _v2fPosition, _v2fPosition + CMath::Normalize(_v2fSeekDesiredVelocity) * 100.0f);
+		m_oVecLinePtrs[1]->setFillColor(sf::Color::Red);
+	}
+}
+
 void CGizmos::CreateLine()
 {
 	sf::RectangleShape* poLine = new sf::RectangleShape();
@@ -77,7 +92,7 @@ void CGizmos::CreateCircle()
 
 void CGizmos::RepositionLine(sf::RectangleShape* _poLine, sf::Vector2f _v2fStart, sf::Vector2f _v2fEnd)
 {
-	_poLine->setSize({ CMath::Distance(_v2fStart, _v2fEnd), 0.5f });
+	_poLine->setSize({ CMath::Distance(_v2fStart, _v2fEnd), 1.0f });
 
 	_poLine->setPosition(_v2fStart);
 

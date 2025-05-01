@@ -25,6 +25,8 @@
     <ClCompile Include="Gizmos.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="MouseCircle.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UIAlignmentPanel.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UICohesionPanel.cpp" />
@@ -44,6 +46,8 @@
     <ClInclude Include="AgentManager.h" />
     <ClInclude Include="Gizmos.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="MouseCircle.h" />
+    <ClInclude Include="TimeManager.h" />
     <ClInclude Include="UIAlignmentPanel.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UICohesionPanel.h" />
