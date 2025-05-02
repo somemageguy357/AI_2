@@ -8,6 +8,8 @@ class CAgentManager
 public:
 	static void Update();
 
+	static void LateUpdate();
+
 	static void Render();
 
 	static void InitAgentManager();

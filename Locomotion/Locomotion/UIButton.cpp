@@ -60,6 +60,16 @@ void CUIButton::Render()
 	}
 }
 
+void CUIButton::SetEnabled(bool _bEnabled)
+{
+	m_bEnabled = _bEnabled;
+
+	if (m_poButtonText != nullptr)
+	{
+		m_poButtonText->SetEnabled(_bEnabled);
+	}
+}
+
 void CUIButton::SetAlignment(EAlignment _eAlignment)
 {
 	SetElementAlignment(&m_oButtonShape, _eAlignment, m_oButtonShape.getPosition());
@@ -118,10 +128,10 @@ void CUIButton::CheckMouseOverlap(bool _bIsClicking)
 void CUIButton::OnClick()
 {
 	#pragma region SetAgentBehaviour
+	//------------------------------------------------------------------------------------------------------------SET BEHAVIOUR
 	if (m_eButtonType == EButtonType::AIArrival)
 	{
 		CAgentBehaviourValues::InitBehaviour(CAgentBehaviourValues::EBehaviour::Arrival);
-		//CAgentManager::GetInstance()->SpawnAgents(CAgentManager::GetInstance()->GetAgents()->size()); //temp refresh
 	}
 
 	else if (m_eButtonType == EButtonType::AIFlock)
@@ -170,6 +180,57 @@ void CUIButton::OnClick()
 	else if (m_eButtonType == EButtonType::IncSeekMSF)
 	{
 		CAgentBehaviourValues::SetSeekMaxSteerForce(CAgentBehaviourValues::GetSeekMaxSteerForce() + 1.0f);
+	}
+
+	//------------------------------------------------------------------------------------------------------------WANDER
+	else if (m_eButtonType == EButtonType::DecWanderWeighting)
+	{
+		CAgentBehaviourValues::SetWanderWeighting(CAgentBehaviourValues::GetWanderWeighting() - 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncWanderWeighting)
+	{
+		CAgentBehaviourValues::SetWanderWeighting(CAgentBehaviourValues::GetWanderWeighting() + 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecWanderStrength)
+	{
+		CAgentBehaviourValues::SetWanderStrength(CAgentBehaviourValues::GetWanderStrength() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncWanderStrength)
+	{
+		CAgentBehaviourValues::SetWanderStrength(CAgentBehaviourValues::GetWanderStrength() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecWanderMSF)
+	{
+		CAgentBehaviourValues::SetWanderMaxSteerForce(CAgentBehaviourValues::GetWanderMaxSteerForce() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncWanderMSF)
+	{
+		CAgentBehaviourValues::SetWanderMaxSteerForce(CAgentBehaviourValues::GetWanderMaxSteerForce() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecWanderRadius)
+	{
+		CAgentBehaviourValues::SetWanderRadius(CAgentBehaviourValues::GetWanderRadius() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncWanderRadius)
+	{
+		CAgentBehaviourValues::SetWanderRadius(CAgentBehaviourValues::GetWanderRadius() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecWanderDistance)
+	{
+		CAgentBehaviourValues::SetWanderDistance(CAgentBehaviourValues::GetWanderDistance() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncWanderDistance)
+	{
+		CAgentBehaviourValues::SetWanderDistance(CAgentBehaviourValues::GetWanderDistance() + 1.0f);
 	}
 
 	//------------------------------------------------------------------------------------------------------------SEPARATION

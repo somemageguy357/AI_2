@@ -32,6 +32,21 @@ void CUIPanel::Render()
 	}
 }
 
+void CUIPanel::SetEnabled(bool _bEnabled)
+{
+	m_bEnabled = _bEnabled;
+
+	for (size_t i = 0; i < m_oVecButtonPtrs.size(); i++)
+	{
+		m_oVecButtonPtrs[i]->SetEnabled(_bEnabled);
+	}
+
+	for (size_t i = 0; i < m_oVecTextPtrs.size(); i++)
+	{
+		m_oVecTextPtrs[i]->SetEnabled(_bEnabled);
+	}
+}
+
 void CUIPanel::RepositionPanel(float _fXOffset)
 {
 	m_fXOffset = _fXOffset;

@@ -12,6 +12,14 @@ void CAgentManager::Update()
 	}
 }
 
+void CAgentManager::LateUpdate()
+{
+	for (size_t i = 0; i < m_oVecAgentPtrs.size(); i++)
+	{
+		m_oVecAgentPtrs[i]->LateUpdate();
+	}
+}
+
 void CAgentManager::Render()
 {
 	for (size_t i = 0; i < m_oVecAgentPtrs.size(); i++)

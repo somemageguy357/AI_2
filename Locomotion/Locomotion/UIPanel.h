@@ -10,6 +10,8 @@ public:
 
 	void Render() override;
 
+	void SetEnabled(bool _bEnabled) override;
+
 	void RepositionPanel(float _fXOffset);
 
 	void ResetPosition();

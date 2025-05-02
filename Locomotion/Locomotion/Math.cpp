@@ -1,5 +1,22 @@
 #include "Math.h"
 
+#include <iostream>
+
+const float CMath::m_fPI = 3.14159f;
+const float CMath::m_fDegToRad = PI() / 180;
+const float CMath::m_fRadToDeg = 180 / PI();
+
+float CMath::RandomRange(float _fMin, float _fMax)
+{
+	float fRange = _fMax - _fMin;
+
+	float fValue = rand() % ((int)fRange * 1000) + ((int)_fMin * 1000);
+
+	fValue /= 1000;
+
+	return fValue;
+}
+
 sf::Vector2f CMath::CenterPoint(sf::Vector2f _v2fPoint1, sf::Vector2f _v2fPoint2)
 {
 	return { (_v2fPoint1.x + _v2fPoint2.x) / 2, (_v2fPoint1.y + _v2fPoint2.y) / 2 };
@@ -19,16 +36,16 @@ void CMath::Normalize(sf::Vector2f* _v2fVector)
 	*_v2fVector = v2fCopy / fMag;
 }
 
-sf::Vector2f CMath::Normalize(const sf::Vector2f _v2fVector)
+sf::Vector2f CMath::Normalize(const sf::Vector2f _kv2fVector)
 {
-	float fMag = sqrt(pow(_v2fVector.x, 2) + pow(_v2fVector.y, 2));
+	float fMag = sqrt(pow(_kv2fVector.x, 2) + pow(_kv2fVector.y, 2));
 
 	if (fMag == 0)
 	{
 		return { 0.0f, 0.0f };
 	}
 
-	sf::Vector2f v2fNormalizedVector = _v2fVector / fMag;
+	sf::Vector2f v2fNormalizedVector = _kv2fVector / fMag;
 
 	return v2fNormalizedVector;
 }
@@ -50,9 +67,19 @@ float CMath::Abs(float _fValue)
 	return fAbsValue;
 }
 
-float CMath::PI()
+const float CMath::PI()
 {
-	return 3.14159f;
+	return m_fPI;
+}
+
+const float CMath::DegToRad()
+{
+	return m_fDegToRad;
+}
+
+const float CMath::RadToDeg()
+{
+	return m_fRadToDeg;
 }
 
 float CMath::Clamp(float _fValue, float _fMin, float _fMax)
@@ -72,18 +99,28 @@ float CMath::Clamp(float _fValue, float _fMin, float _fMax)
 	return fValue;
 }
 
-sf::Vector2f CMath::ClampMagnitude(sf::Vector2f _v2fVector, float _fMax)
+float CMath::ClampMin(float _fValue, float _fMin)
 {
-	sf::Vector2f v2fClamped = _v2fVector;
+	float fValue = _fValue;
 
-	float fMag = Clamp(sqrt(pow(_v2fVector.x, 2) + pow(_v2fVector.y, 2)), 0.0f, _fMax);
-
-	if (fMag == 0)
+	if (fValue < _fMin)
 	{
-		return v2fClamped;
+		fValue = _fMin;
 	}
 
-	v2fClamped = _v2fVector / fMag;
+	return fValue;
+}
+
+sf::Vector2f CMath::ClampMagnitude(sf::Vector2f _v2fVector, float _fMax)
+{
+	sf::Vector2f v2fClamped = { Clamp(_v2fVector.x, -_fMax, _fMax), Clamp(_v2fVector.y, -_fMax, _fMax) };
 
 	return v2fClamped;
+}
+
+float CMath::Lerp(float _fA, float _fB, float _fT)
+{
+	float fValue = _fA + (_fB - _fA) * _fT;
+
+	return fValue;
 }

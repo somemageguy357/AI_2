@@ -48,9 +48,11 @@ void CUIManager::Render()
 
 void CUIManager::InitUI()
 {
+	//Load font.
 	m_poUIFont = new sf::Font();
 	m_poUIFont->loadFromFile("Fonts/Roboto-Light.ttf");
 
+	//Create main UI.
 	CreateText(20, { 60, 20 }, "Behaviours", sf::Color::White, CUIElement::EAlignment::CenterMiddle, true);
 	CreateButton({ 100, 30 }, { 10, 50 }, CUIButton::EButtonType::AIArrival, CUIElement::EAlignment::TopLeft, 20, "Arrival", true);
 	CreateButton({ 100, 30 }, { 10, 90 }, CUIButton::EButtonType::AIFlock, CUIElement::EAlignment::TopLeft, 20, "Flock", true);
@@ -62,6 +64,7 @@ void CUIManager::InitUI()
 	CreateText(20, { 60, 320 }, "Gizmos", sf::Color::White, CUIElement::EAlignment::CenterMiddle, true);
 	CreateButton({ 100, 30 }, { 10, 350 }, CUIButton::EButtonType::ToggleGizmos, CUIElement::EAlignment::TopLeft, 20, "Enable", true);
 
+	//Create panels for the behaviours.
 	m_poSeekPanel = new CUISeekPanel({ 0.0f, 510.0f });
 	m_poWanderPanel = new CUIWanderPanel({ 0.0f, 510.0f });
 	m_poSeparationPanel = new CUISeparationPanel({ 0.0f, 510.0f });
@@ -74,6 +77,7 @@ void CUIManager::InitUI()
 	m_oVecUIElementPtrs.push_back(m_poCohesionPanel);
 	m_oVecUIElementPtrs.push_back(m_poAlignmentPanel);
 
+	//Add panels to their own vector to make it easier to access them when closing them all.
 	m_oVecPanelPtrs.push_back(m_poSeekPanel);
 	m_oVecPanelPtrs.push_back(m_poWanderPanel);
 	m_oVecPanelPtrs.push_back(m_poSeparationPanel);

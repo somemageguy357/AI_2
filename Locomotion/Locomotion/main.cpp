@@ -17,6 +17,8 @@ Mail : Connor.Galvin@mds.ac.nz
 #include "TimeManager.h"
 #include "MouseCircle.h"
 
+#include <iostream>
+
 void main()
 {
 	srand(time(NULL));
@@ -54,6 +56,9 @@ void main()
 			CUIManager::Update(bIsClicking);
 			CMouseCircle::GetInstance()->Update();
 			CAgentManager::Update();
+
+			//----------LATE UPDATE----------
+			CAgentManager::LateUpdate(); //for gizmo positions.
 
 			//----------RENDER----------
 			CUIManager::Render();

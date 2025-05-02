@@ -17,24 +17,35 @@ CMouseCircle::~CMouseCircle() {}
 
 void CMouseCircle::Update()
 {
-	sf::Vector2i v2iMousePosition = sf::Mouse::getPosition(*CWindowManager::GetWindow());
-	sf::FloatRect oBoundary = CAgentManager::GetBoundary()->getGlobalBounds();
-
-	if (v2iMousePosition.x <= oBoundary.left + oBoundary.width &&
-		v2iMousePosition.x >= oBoundary.left &&
-		v2iMousePosition.y <= oBoundary.top + oBoundary.height &&
-		v2iMousePosition.y >= oBoundary.top)
+	if (m_bEnabled == true)
 	{
-		m_oCircle.setPosition({ (float)v2iMousePosition.x, (float)(v2iMousePosition.y) });
+		sf::Vector2i v2iMousePosition = sf::Mouse::getPosition(*CWindowManager::GetWindow());
+		sf::FloatRect oBoundary = CAgentManager::GetBoundary()->getGlobalBounds();
+
+		if (v2iMousePosition.x <= oBoundary.left + oBoundary.width &&
+			v2iMousePosition.x >= oBoundary.left &&
+			v2iMousePosition.y <= oBoundary.top + oBoundary.height &&
+			v2iMousePosition.y >= oBoundary.top)
+		{
+			m_oCircle.setPosition({ (float)v2iMousePosition.x, (float)(v2iMousePosition.y) });
+		}
 	}
 }
 
 void CMouseCircle::Render()
 {
-	CWindowManager::GetWindow()->draw(m_oCircle);
+	if (m_bEnabled == true)
+	{
+		CWindowManager::GetWindow()->draw(m_oCircle);
+	}
 }
 
 sf::Vector2f CMouseCircle::GetPosition()
 {
 	return m_oCircle.getPosition();
+}
+
+void CMouseCircle::SetEnabled(bool _bEnabled)
+{
+	m_bEnabled = _bEnabled;
 }

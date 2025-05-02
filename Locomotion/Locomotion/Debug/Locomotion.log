@@ -1,2 +1,10 @@
 ﻿  Agent.cpp
+  AgentBehaviourValues.cpp
+  Gizmos.cpp
+  Math.cpp
+C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Locomotion\Math.cpp(13,15): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Locomotion\Math.cpp(29,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Locomotion\Math.cpp(41,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Locomotion\Math.cpp(55,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   Locomotion.vcxproj -> C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Debug\Locomotion.exe

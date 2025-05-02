@@ -20,10 +20,14 @@ public:
 
 	sf::Vector2f GetPosition();
 
+	void SetEnabled(bool _bEnabled);
+
 private:
 	static CMouseCircle* m_poInstance;
 
 	sf::CircleShape m_oCircle;
+
+	bool m_bEnabled = false;
 
 	CMouseCircle(float _fRadius);
 	~CMouseCircle();

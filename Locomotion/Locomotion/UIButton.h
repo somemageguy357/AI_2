@@ -23,13 +23,16 @@ public:
 	{
 		n,
 
+		//--------------------------SET BEHAVIOURS
 		AISeek,
 		AIWander,
 		AIArrival,
 		AIFlock,
 
+		//--------------------------GIZMOS
 		ToggleGizmos,
 
+		//--------------------------SEEK
 		IncSeekWeighting,
 		DecSeekWeighting,
 		IncSeekStrength,
@@ -37,6 +40,19 @@ public:
 		IncSeekMSF,
 		DecSeekMSF,
 
+		//--------------------------WANDER
+		IncWanderWeighting,
+		DecWanderWeighting,
+		IncWanderStrength,
+		DecWanderStrength,
+		IncWanderMSF,
+		DecWanderMSF,
+		IncWanderRadius,
+		DecWanderRadius,
+		IncWanderDistance,
+		DecWanderDistance,
+
+		//--------------------------SEPARATION
 		IncSeparationWeighting,
 		DecSeparationWeighting,
 		IncSeparationStrength,
@@ -46,6 +62,7 @@ public:
 		IncSeparationNHR,
 		DecSeparationNHR,
 
+		//--------------------------COHESION
 		IncCohesionWeighting,
 		DecCohesionWeighting,
 		IncCohesionStrength,
@@ -56,6 +73,7 @@ public:
 		DecCohesionNHR,
 		ToggleCohesionIncludeSelf,
 
+		//--------------------------ALIGNMENT
 		IncAlignmentWeighting,
 		DecAlignmentWeighting,
 		IncAlignmentStrength,
@@ -106,6 +124,8 @@ public:
 	/// If enabled: renders the button and its text element (if it has one) to the render window.
 	/// </summary>
 	void Render() override;
+
+	void SetEnabled(bool _bEnabled) override;
 
 	void SetAlignment(EAlignment _eAlignment) override;
 

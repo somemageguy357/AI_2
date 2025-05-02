@@ -31,7 +31,7 @@ public:
 	/// Enables/disables the button which determines if its Update() and Render() functions should perform.
 	/// </summary>
 	/// <param name="_bEnabled:">The new enabled state of the button.</param>
-	void SetEnabled(bool _bEnabled);
+	virtual void SetEnabled(bool _bEnabled);
 
 	bool GetEnabled();
 
