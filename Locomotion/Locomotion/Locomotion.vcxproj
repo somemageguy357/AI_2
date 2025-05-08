@@ -28,6 +28,7 @@
     <ClCompile Include="MouseCircle.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UIAlignmentPanel.cpp" />
+    <ClCompile Include="UIArrivalPanel.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UICohesionPanel.cpp" />
     <ClCompile Include="UIElement.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="MouseCircle.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="UIAlignmentPanel.h" />
+    <ClInclude Include="UIArrivalPanel.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UICohesionPanel.h" />
     <ClInclude Include="UIElement.h" />

@@ -11,6 +11,7 @@ Mail : Connor.Galvin@mds.ac.nz
 **************************************************************************/
 
 #include "UIManager.h"
+#include "Utilities.h"
 
 std::vector<CUIElement*> CUIManager::m_oVecUIElementPtrs;
 std::vector<CUIButton*> CUIManager::m_oVecButtonPtrs;
@@ -18,6 +19,9 @@ std::vector<CUIPanel*> CUIManager::m_oVecPanelPtrs;
 
 sf::Font* CUIManager::m_poUIFont = nullptr;
 
+CUIText* CUIManager::m_poAgentSpeedText = nullptr;
+
+CUIArrivalPanel* CUIManager::m_poArrivalPanel = nullptr;
 CUISeekPanel* CUIManager::m_poSeekPanel = nullptr;
 CUIWanderPanel* CUIManager::m_poWanderPanel = nullptr;
 CUISeparationPanel* CUIManager::m_poSeparationPanel = nullptr;
@@ -55,22 +59,27 @@ void CUIManager::InitUI()
 	//Create main UI.
 	CreateText(20, { 60, 20 }, "Behaviours", sf::Color::White, CUIElement::EAlignment::CenterMiddle, true);
 	CreateButton({ 100, 30 }, { 10, 50 }, CUIButton::EButtonType::AIArrival, CUIElement::EAlignment::TopLeft, 20, "Arrival", true);
-	CreateButton({ 100, 30 }, { 10, 90 }, CUIButton::EButtonType::AIFlock, CUIElement::EAlignment::TopLeft, 20, "Flock", true);
-	CreateButton({ 100, 30 }, { 10, 130 }, CUIButton::EButtonType::AISeek, CUIElement::EAlignment::TopLeft, 20, "Seek", true);
+	CreateButton({ 100, 30 }, { 10, 90 }, CUIButton::EButtonType::AISeek, CUIElement::EAlignment::TopLeft, 20, "Seek", true);
+	CreateButton({ 100, 30 }, { 10, 130 }, CUIButton::EButtonType::AIPursuit, CUIElement::EAlignment::TopLeft, 20, "Pursuit", true);
 	CreateButton({ 100, 30 }, { 10, 170 }, CUIButton::EButtonType::AIWander, CUIElement::EAlignment::TopLeft, 20, "Wander", true);
-	CreateButton({ 100, 30 }, { 10, 210 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 20, "NULL", true);
+	CreateButton({ 100, 30 }, { 10, 210 }, CUIButton::EButtonType::AIFlock, CUIElement::EAlignment::TopLeft, 20, "Flock", true);
 	CreateButton({ 100, 30 }, { 10, 250 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 20, "NULL", true);
 
 	CreateText(20, { 60, 320 }, "Gizmos", sf::Color::White, CUIElement::EAlignment::CenterMiddle, true);
 	CreateButton({ 100, 30 }, { 10, 350 }, CUIButton::EButtonType::ToggleGizmos, CUIElement::EAlignment::TopLeft, 20, "Enable", true);
 
+	CreateText(20, { 60, 420 }, "Agent Speed:", sf::Color::White, CUIElement::EAlignment::CenterMiddle, true);
+	m_poAgentSpeedText = CreateText(20, { 60, 440 }, "", sf::Color::White, CUIElement::EAlignment::CenterMiddle, true);
+
 	//Create panels for the behaviours.
+	m_poArrivalPanel = new CUIArrivalPanel({ 0.0f, 510.0f });
 	m_poSeekPanel = new CUISeekPanel({ 0.0f, 510.0f });
 	m_poWanderPanel = new CUIWanderPanel({ 0.0f, 510.0f });
 	m_poSeparationPanel = new CUISeparationPanel({ 0.0f, 510.0f });
 	m_poCohesionPanel = new CUICohesionPanel({ 0.0f, 510.0f });
 	m_poAlignmentPanel = new CUIAlignmentPanel({ 0.0f, 510.0f });
 
+	m_oVecUIElementPtrs.push_back(m_poArrivalPanel);
 	m_oVecUIElementPtrs.push_back(m_poSeekPanel);
 	m_oVecUIElementPtrs.push_back(m_poWanderPanel);
 	m_oVecUIElementPtrs.push_back(m_poSeparationPanel);
@@ -78,6 +87,7 @@ void CUIManager::InitUI()
 	m_oVecUIElementPtrs.push_back(m_poAlignmentPanel);
 
 	//Add panels to their own vector to make it easier to access them when closing them all.
+	m_oVecPanelPtrs.push_back(m_poArrivalPanel);
 	m_oVecPanelPtrs.push_back(m_poSeekPanel);
 	m_oVecPanelPtrs.push_back(m_poWanderPanel);
 	m_oVecPanelPtrs.push_back(m_poSeparationPanel);
@@ -109,11 +119,20 @@ void CUIManager::RemoveFromButtonVector(CUIButton* _poButton)
 
 void CUIManager::CloseAllPanels()
 {
-	m_poSeekPanel->SetEnabled(false);
-	m_poWanderPanel->SetEnabled(false);
-	m_poSeparationPanel->SetEnabled(false);
-	m_poCohesionPanel->SetEnabled(false);
-	m_poAlignmentPanel->SetEnabled(false);
+	for (size_t i = 0; i < m_oVecPanelPtrs.size(); i++)
+	{
+		m_oVecPanelPtrs[i]->SetEnabled(false);
+	}
+}
+
+void CUIManager::SetAgentSpeedText(float _fValue)
+{
+	m_poAgentSpeedText->SetString(CUtilities::FloatToString(_fValue, 0));
+}
+
+CUIArrivalPanel* CUIManager::GetArrivalPanel()
+{
+	return m_poArrivalPanel;
 }
 
 CUISeekPanel* CUIManager::GetSeekPanel()
@@ -178,8 +197,10 @@ void CUIManager::CreateButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, 
 	m_oVecUIElementPtrs.push_back(poButton);
 }
 
-void CUIManager::CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, CUIElement::EAlignment _eAlignment, bool _bEnabled)
+CUIText* CUIManager::CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, CUIElement::EAlignment _eAlignment, bool _bEnabled)
 {
 	CUIText* poText = new CUIText(_uiFontSize, _v2fPosition, _sTextString, _oColour, _eAlignment, _bEnabled);
 	m_oVecUIElementPtrs.push_back(poText);
+
+	return poText;
 }

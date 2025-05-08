@@ -4,7 +4,13 @@
 #include "Math.h"
 #include "MouseCircle.h"
 
-#pragma region Static Variables
+#pragma region Static Variable Initialization
+float CAgentBehaviourValues::m_fAgentSpeedMultiplier = 0.0f;
+
+float CAgentBehaviourValues::m_fArrivalWeighting = 0.0f;
+float CAgentBehaviourValues::m_fArrivalMaxSteerForce = 0.0f;
+float CAgentBehaviourValues::m_fArrivalStoppingRadius = 0.0f;
+
 float CAgentBehaviourValues::m_fSeekWeighting = 0.0f;
 float CAgentBehaviourValues::m_fSeekStrength = 0.0f;
 float CAgentBehaviourValues::m_fSeekMaxSteerForce = 0.0f;
@@ -18,9 +24,6 @@ float CAgentBehaviourValues::m_fWanderStrength = 0.0f;
 float CAgentBehaviourValues::m_fWanderMaxSteerForce = 0.0f;
 float CAgentBehaviourValues::m_fWanderRadius = 0.0f;
 float CAgentBehaviourValues::m_fWanderDistance = 0.0f;
-float CAgentBehaviourValues::m_fWanderAdjustmentInterval = 0.0f;
-float CAgentBehaviourValues::m_fWanderAngleRandomStrength = 0.0f;
-float CAgentBehaviourValues::m_fWanderAngleLerpSpeed = 0.0f;
 
 float CAgentBehaviourValues::m_fSeparationWeighting = 0.0f;
 float CAgentBehaviourValues::m_fSeparationStrength = 0.0f;
@@ -64,6 +67,7 @@ void CAgentBehaviourValues::InitBehaviour(EBehaviour _eBehaviour)
 		InitWanderBehaviour();
 	}
 
+	CUIManager::SetAgentSpeedText(m_fAgentSpeedMultiplier);
 	CUIManager::PositionPanels();
 }
 
@@ -72,42 +76,33 @@ void CAgentBehaviourValues::ResetAllValues()
 	CUIManager::CloseAllPanels();
 	CMouseCircle::GetInstance()->SetEnabled(false);
 
+	m_fArrivalWeighting = 0.0f;
 	m_fSeekWeighting = 0.0f;
-	m_fSeekStrength = 0.0f;
-	m_fSeekMaxSteerForce = 0.0f;
-
-	m_fFleeWeighting = 0.0f;
-	m_fFleeStrength = 0.0f;
-	m_fFleeMaxSteerForce = 0.0f;
-
 	m_fWanderWeighting = 0.0f;
-	m_fWanderStrength = 0.0f;
-	m_fWanderMaxSteerForce = 0.0f;
-	m_fWanderRadius = 0.0f;
-	m_fWanderDistance = 0.0f;
-	m_fWanderAdjustmentInterval = 0.0f;
-	m_fWanderAngleRandomStrength = 0.0f;
-	m_fWanderAngleLerpSpeed = 0.0f;
-
 	m_fSeparationWeighting = 0.0f;
-	m_fSeparationStrength = 0.0f;
-	m_fSeparationMaxSteerForce = 0.0f;
-	m_fSeparationNeighbourhoodRadius = 0.0f;
-
 	m_fCohesionWeighting = 0.0f;
-	m_fCohesionStrength = 0.0f;
-	m_fCohesionMaxSteerForce = 0.0f;
-	m_fCohesionNeighbourhoodRadius = 0.0f;
-	m_bCohesionIncludeSelf = false;
-
 	m_fAlignmentWeighting = 0.0f;
-	m_fAlignmentStrength = 0.0f;
-	m_fAlignmentMaxSteerForce = 0.0f;
-	m_fAlignmentNeighbourhoodRadius = 0.0f;
 }
 
 void CAgentBehaviourValues::InitArrivalBehaviour()
 {
+	m_fAgentSpeedMultiplier = 20.0f;
+
+	m_fArrivalWeighting = 1.0f;
+	//m_fSeekStrength = 8.0f;
+	m_fArrivalMaxSteerForce = 1.0f;
+	m_fArrivalStoppingRadius = 100.0f;
+
+	CUIArrivalPanel* poArrivalPanel = CUIManager::GetArrivalPanel();
+	poArrivalPanel->SetEnabled(true);
+	poArrivalPanel->SetWeightText(m_fArrivalWeighting);
+	//poArrivalPanel->SetStrengthText(m_fSeekStrength);
+	poArrivalPanel->SetMaxSteerForceText(m_fArrivalMaxSteerForce);
+	poArrivalPanel->SetStoppingRadiusText(m_fArrivalStoppingRadius);
+
+	CMouseCircle::GetInstance()->SetEnabled(true);
+
+	CAgentManager::SpawnAgents(1);
 }
 
 void CAgentBehaviourValues::InitFlockBehaviour()
@@ -169,6 +164,8 @@ void CAgentBehaviourValues::InitFlockBehaviour()
 
 void CAgentBehaviourValues::InitSeekBehaviour()
 {
+	m_fAgentSpeedMultiplier = 30.0f;
+
 	m_fSeekWeighting = 1.0f;
 	m_fSeekStrength = 8.0f;
 	m_fSeekMaxSteerForce = 1.0f;
@@ -186,14 +183,13 @@ void CAgentBehaviourValues::InitSeekBehaviour()
 
 void CAgentBehaviourValues::InitWanderBehaviour()
 {
+	m_fAgentSpeedMultiplier = 2.0f;
+
 	m_fWanderWeighting = 1.0f;
 	m_fWanderStrength = 5.0f;
 	m_fWanderMaxSteerForce = 10.0f;
 	m_fWanderRadius = 50.0f;
 	m_fWanderDistance = m_fWanderRadius + 10.0f;
-	//m_fWanderAdjustmentInterval = 0.0f;
-	//m_fWanderAngleRandomStrength = 0.0f;
-	//m_fWanderAngleLerpSpeed = 0.0f;
 
 	CUIWanderPanel* poWanderPanel = CUIManager::GetWanderPanel();
 	poWanderPanel->SetEnabled(true);
@@ -207,6 +203,48 @@ void CAgentBehaviourValues::InitWanderBehaviour()
 }
 
 //---------------------------------------------------------------------------------------------BEHAVIOUR VALUES
+
+float CAgentBehaviourValues::GetAgentSpeedMultiplier()
+{
+	return m_fAgentSpeedMultiplier;
+}
+
+//---------------------------------------------------------------------------------------------ARRIVAL
+void CAgentBehaviourValues::SetArrivalWeighting(float _fWeighting)
+{
+	m_fArrivalWeighting = CMath::Clamp(_fWeighting, 0.0f, 1.0f);
+
+	CUIManager::GetArrivalPanel()->SetWeightText(m_fArrivalWeighting);
+}
+
+float CAgentBehaviourValues::GetArrivalWeighting()
+{
+	return m_fArrivalWeighting;
+}
+
+void CAgentBehaviourValues::SetArrivalMaxSteerForce(float _fMaxSteerForce)
+{
+	m_fArrivalMaxSteerForce = CMath::ClampMin(_fMaxSteerForce, 0.0f);
+
+	CUIManager::GetArrivalPanel()->SetMaxSteerForceText(m_fArrivalMaxSteerForce);
+}
+
+float CAgentBehaviourValues::GetArrivalMaxSteerForce()
+{
+	return m_fArrivalMaxSteerForce;
+}
+
+void CAgentBehaviourValues::SetArrivalStoppingRadius(float _fRadius)
+{
+	m_fArrivalStoppingRadius = CMath::ClampMin(_fRadius, 0.0f);
+
+	CUIManager::GetArrivalPanel()->SetStoppingRadiusText(m_fArrivalStoppingRadius);
+}
+
+float CAgentBehaviourValues::GetArrivalStoppingRadius()
+{
+	return m_fArrivalStoppingRadius;
+}
 
 //---------------------------------------------------------------------------------------------SEEK
 void CAgentBehaviourValues::SetSeekWeighting(float _fWeighting)
@@ -335,36 +373,6 @@ void CAgentBehaviourValues::SetWanderDistance(float _fDistance)
 float CAgentBehaviourValues::GetWanderDistance()
 {
 	return m_fWanderDistance;
-}
-
-void CAgentBehaviourValues::SetWanderAdjustmentInterval(float _fAdjustmentInterval) //delete?
-{
-	m_fWanderAdjustmentInterval = _fAdjustmentInterval;
-}
-
-float CAgentBehaviourValues::GetWanderAdjustmentInterval() //delete?
-{
-	return m_fWanderAdjustmentInterval;
-}
-
-void CAgentBehaviourValues::SetWanderAngleRandomStrength(float _fAngleRandStrength) //delete?
-{
-	m_fWanderAngleRandomStrength = _fAngleRandStrength;
-}
-
-float CAgentBehaviourValues::GetWanderAngleRandomStrength() //delete?
-{
-	return m_fWanderAngleRandomStrength;
-}
-
-void CAgentBehaviourValues::SetWanderAngleLerpSpeed(float _fAngleLerpSpeed) //delete?
-{
-	m_fWanderAngleLerpSpeed = _fAngleLerpSpeed;
-}
-
-float CAgentBehaviourValues::GetWanderAngleLerpSpeed() //delete?
-{
-	return m_fWanderAngleLerpSpeed;
 }
 
 //---------------------------------------------------------------------------------------------SEPARATION

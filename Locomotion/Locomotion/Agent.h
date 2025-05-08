@@ -21,14 +21,17 @@ public:
 
 	sf::Vector2f GetPosition();
 
+	void ResetVelocity();
+
 private:
 	sf::RectangleShape m_oShape;
 	sf::Texture m_oTexture;
 
 	CGizmos m_oGizmos;
 
-	float m_fSpeed = 2.0f;
 	sf::Vector2f m_v2fVelocity;
+
+	sf::Vector2f m_v2fArrivalDesiredVelocity;
 
 	sf::Vector2f m_v2fSeekDesiredVelocity;
 
@@ -37,6 +40,8 @@ private:
 	float m_fTargetWanderAngle = 0.0f;
 
 	bool m_bEnabled = true;
+
+	void Arrival();
 
 	void Seek();
 

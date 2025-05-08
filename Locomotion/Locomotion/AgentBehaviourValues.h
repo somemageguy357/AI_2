@@ -14,6 +14,15 @@ public:
 	static void InitBehaviour(EBehaviour _eBehaviour);
 
 	#pragma region Get/Set
+	static float GetAgentSpeedMultiplier();
+
+	static void SetArrivalWeighting(float _fWeighting);
+	static float GetArrivalWeighting();
+	static void SetArrivalMaxSteerForce(float _fMaxSteerForce);
+	static float GetArrivalMaxSteerForce();
+	static void SetArrivalStoppingRadius(float _fRadius);
+	static float GetArrivalStoppingRadius();
+
 	static void SetSeekWeighting(float _fWeighting);
 	static float GetSeekWeighting();
 	static void SetSeekStrength(float _fStrength);
@@ -38,12 +47,6 @@ public:
 	static float GetWanderRadius();
 	static void SetWanderDistance(float _fDistance);
 	static float GetWanderDistance();
-	static void SetWanderAdjustmentInterval(float _fAdjustmentInterval);
-	static float GetWanderAdjustmentInterval();
-	static void SetWanderAngleRandomStrength(float _fAngleRandStrength);
-	static float GetWanderAngleRandomStrength();
-	static void SetWanderAngleLerpSpeed(float _fAngleLerpSpeed);
-	static float GetWanderAngleLerpSpeed();
 
 	static void SetSeparationWeighting(float _fWeighting);
 	static float GetSeparationWeighting();
@@ -76,6 +79,12 @@ public:
 	#pragma endregion
 
 private:
+	static float m_fAgentSpeedMultiplier;
+
+	static float m_fArrivalWeighting;
+	static float m_fArrivalMaxSteerForce;
+	static float m_fArrivalStoppingRadius;
+
 	static float m_fSeekWeighting;
 	static float m_fSeekStrength;
 	static float m_fSeekMaxSteerForce;
@@ -89,9 +98,6 @@ private:
 	static float m_fWanderMaxSteerForce;
 	static float m_fWanderRadius;
 	static float m_fWanderDistance;
-	static float m_fWanderAdjustmentInterval;
-	static float m_fWanderAngleRandomStrength;
-	static float m_fWanderAngleLerpSpeed;
 
 	static float m_fSeparationWeighting;
 	static float m_fSeparationStrength;

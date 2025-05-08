@@ -50,9 +50,21 @@ sf::Vector2f CMath::Normalize(const sf::Vector2f _kv2fVector)
 	return v2fNormalizedVector;
 }
 
+float CMath::GetMagnitude(sf::Vector2f _v2fVector)
+{
+	return sqrt(pow(_v2fVector.x, 2) + pow(_v2fVector.y, 2));
+}
+
 float CMath::Distance(sf::Vector2f _v2fPoint1, sf::Vector2f _v2fPoint2)
 {
 	return sqrt(pow(_v2fPoint1.x - _v2fPoint2.x, 2) + pow(_v2fPoint1.y - _v2fPoint2.y, 2));
+}
+
+sf::Vector2f CMath::TargetDirection(sf::Vector2f _v2fTargetPos, sf::Vector2f _v2fSelfPos)
+{
+	sf::Vector2f v2fTargetDirection = _v2fTargetPos - _v2fSelfPos;
+
+	return v2fTargetDirection;
 }
 
 float CMath::Abs(float _fValue)

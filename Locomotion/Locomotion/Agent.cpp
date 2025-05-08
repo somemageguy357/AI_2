@@ -49,6 +49,11 @@ void CAgent::Update()
 	{
 		//perform behaviour
 
+		if (CAgentBehaviourValues::GetArrivalWeighting() > 0.0f)
+		{
+			Arrival();
+		}
+
 		if (CAgentBehaviourValues::GetSeekWeighting() > 0.0f)
 		{
 			Seek();
@@ -70,6 +75,11 @@ void CAgent::LateUpdate()
 	if (m_bEnabled == true)
 	{
 		//m_oGizmos.Update(this, CAgentManager::GetAgents());
+
+		if (CAgentBehaviourValues::GetArrivalWeighting() > 0.0f)
+		{
+			m_oGizmos.Arrival(m_oShape.getPosition(), m_v2fVelocity, m_v2fArrivalDesiredVelocity, CMouseCircle::GetInstance()->GetPosition(), CAgentBehaviourValues::GetArrivalStoppingRadius());
+		}
 
 		if (CAgentBehaviourValues::GetSeekWeighting() > 0.0f)
 		{
@@ -110,11 +120,52 @@ sf::Vector2f CAgent::GetPosition()
 	return m_oShape.getPosition();
 }
 
-void CAgent::Seek()
+void CAgent::ResetVelocity()
+{
+	m_v2fVelocity = { 0.0f, 0.0f };
+}
+
+void CAgent::Arrival()
 {
 	sf::Vector2f v2fTargetPosition = CMouseCircle::GetInstance()->GetPosition();
 
-	sf::Vector2f v2fOffset = { v2fTargetPosition.x - m_oShape.getPosition().x, v2fTargetPosition.y - m_oShape.getPosition().y };
+	m_v2fArrivalDesiredVelocity = CMath::TargetDirection(v2fTargetPosition, m_oShape.getPosition());
+
+	float fDistance = CMath::GetMagnitude(m_v2fArrivalDesiredVelocity);
+	float fStoppingRadius = CAgentBehaviourValues::GetArrivalStoppingRadius();
+
+	if (fDistance < fStoppingRadius)
+	{
+		m_v2fArrivalDesiredVelocity = CMath::Normalize(m_v2fArrivalDesiredVelocity) * 10.0f * (fDistance / fStoppingRadius);
+		std::cout << (fDistance / fStoppingRadius) << std::endl;
+	}
+
+	else
+	{
+		m_v2fArrivalDesiredVelocity = CMath::Normalize(m_v2fArrivalDesiredVelocity) * 10.0f;
+	}
+
+	//--
+	//sf::Vector2f v2fSteerForce = m_v2fArrivalDesiredVelocity - m_v2fVelocity;
+
+	//m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity + v2fSteerForce, 10.0f);
+
+	//m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetArrivalWeighting() * CTimeManager::GetDeltaTime();
+
+	//^ works straight to point.
+
+	sf::Vector2f v2fSteerForce = m_v2fArrivalDesiredVelocity - m_v2fVelocity;
+	v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetArrivalMaxSteerForce());
+
+	//m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity + v2fSteerForce, 10.0f);
+
+	m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetArrivalWeighting() * CTimeManager::GetDeltaTime();
+	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, CMath::GetMagnitude(m_v2fArrivalDesiredVelocity));
+}
+
+void CAgent::Seek()
+{
+	sf::Vector2f v2fOffset = CMath::TargetDirection(CMouseCircle::GetInstance()->GetPosition(), m_oShape.getPosition());
 
 	m_v2fSeekDesiredVelocity = CMath::Normalize(v2fOffset) * 10.0f;
 
@@ -150,7 +201,7 @@ void CAgent::Wander()
 	//--
 
 	sf::Vector2f v2fActualTarget = v2fCirclePosition + v2fWanderDirection * CAgentBehaviourValues::GetWanderRadius();
-	sf::Vector2f v2fSteerForce = { v2fActualTarget.x - m_oShape.getPosition().x, v2fActualTarget.y - m_oShape.getPosition().y };
+	sf::Vector2f v2fSteerForce = CMath::TargetDirection(v2fActualTarget, m_oShape.getPosition());
 
 	//--
 
@@ -165,7 +216,7 @@ void CAgent::Translate()
 {
 	//std::cout << "velocity: " << m_v2fVelocity.x << ", " << m_v2fVelocity.y << std::endl;
 	//Update position.
-	m_oShape.setPosition(m_oShape.getPosition() + (m_v2fVelocity * m_fSpeed * CTimeManager::GetDeltaTime()));
+	m_oShape.setPosition(m_oShape.getPosition() + (m_v2fVelocity * CAgentBehaviourValues::GetAgentSpeedMultiplier() * CTimeManager::GetDeltaTime()));
 
 	//Update rotation.
 	if (m_v2fVelocity.x != 0.0f || m_v2fVelocity.y != 0.0f)

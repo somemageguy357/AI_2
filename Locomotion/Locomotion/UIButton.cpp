@@ -151,6 +151,37 @@ void CUIButton::OnClick()
 	#pragma endregion
 
 	#pragma region ChangeBehaviourValues
+	//------------------------------------------------------------------------------------------------------------ARRIVAL
+	else if (m_eButtonType == EButtonType::DecArrivalWeighting)
+	{
+		CAgentBehaviourValues::SetArrivalWeighting(CAgentBehaviourValues::GetArrivalWeighting() - 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncArrivalWeighting)
+	{
+		CAgentBehaviourValues::SetArrivalWeighting(CAgentBehaviourValues::GetArrivalWeighting() + 0.05f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecArrivalMSF)
+	{
+		CAgentBehaviourValues::SetArrivalMaxSteerForce(CAgentBehaviourValues::GetArrivalMaxSteerForce() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncArrivalMSF)
+	{
+		CAgentBehaviourValues::SetArrivalMaxSteerForce(CAgentBehaviourValues::GetArrivalMaxSteerForce() + 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::DecArrivalStoppingRadius)
+	{
+		CAgentBehaviourValues::SetArrivalStoppingRadius(CAgentBehaviourValues::GetArrivalStoppingRadius() - 5.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncArrivalStoppingRadius)
+	{
+		CAgentBehaviourValues::SetArrivalStoppingRadius(CAgentBehaviourValues::GetArrivalStoppingRadius() + 5.0f);
+	}
+
 	//------------------------------------------------------------------------------------------------------------SEEK
 	else if (m_eButtonType == EButtonType::DecSeekWeighting)
 	{

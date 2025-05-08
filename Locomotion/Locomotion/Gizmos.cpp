@@ -66,7 +66,46 @@ bool CGizmos::GetGizmosEnabled()
 	return m_bEnabled;
 }
 
-void CGizmos::Seek(sf::Vector2f _v2fPosition, sf::Vector2f _v2fVelocity, sf::Vector2f _v2fSeekDesiredVelocity)
+void CGizmos::Arrival(sf::Vector2f _v2fPosition, sf::Vector2f _v2fVelocity, sf::Vector2f _v2fDesiredVelocity, sf::Vector2f _v2fStopPoint, float _fStopRadius)
+{
+	if (m_bEnabled == true)
+	{
+		//Create the needed number of line gizmos.
+		while (m_oVecLinePtrs.size() < 2)
+		{
+			CreateLine();
+		}
+
+		//Create the needed number of circle gizmos.
+		while (m_oVecCirclePtrs.size() < 1)
+		{
+			CreateCircle();
+		}
+
+		RepositionLine(m_oVecLinePtrs[0], _v2fPosition, _v2fPosition + CMath::Normalize(_v2fVelocity) * 100.0f);
+		m_oVecLinePtrs[0]->setFillColor(sf::Color::Green);
+		RepositionLine(m_oVecLinePtrs[1], _v2fPosition, _v2fPosition + CMath::Normalize(_v2fDesiredVelocity) * 100.0f);
+		m_oVecLinePtrs[1]->setFillColor(sf::Color::Red);
+
+		RepositionCircle(m_oVecCirclePtrs[0], _v2fStopPoint, _fStopRadius);
+		m_oVecCirclePtrs[0]->setOutlineColor(sf::Color::Yellow);
+
+		//Set up the gizmos that are to be rendered.
+		m_oVecRenderedLinePtrs.resize(2);
+		m_oVecRenderedLinePtrs[0] = m_oVecLinePtrs[0];
+		m_oVecRenderedLinePtrs[1] = m_oVecLinePtrs[1];
+
+		m_oVecRenderedCirclePtrs.resize(1);
+		m_oVecRenderedCirclePtrs[0] = m_oVecCirclePtrs[0];
+
+		//Render the gizmos and clear the vector containing them incase more gizmos are to be rendered.
+		Render();
+		m_oVecRenderedLinePtrs.clear();
+		m_oVecRenderedCirclePtrs.clear();
+	}
+}
+
+void CGizmos::Seek(sf::Vector2f _v2fPosition, sf::Vector2f _v2fVelocity, sf::Vector2f _v2fDesiredVelocity)
 {
 	if (m_bEnabled == true)
 	{
@@ -79,7 +118,7 @@ void CGizmos::Seek(sf::Vector2f _v2fPosition, sf::Vector2f _v2fVelocity, sf::Vec
 		//Position the gizmos.
 		RepositionLine(m_oVecLinePtrs[0], _v2fPosition, _v2fPosition + CMath::Normalize(_v2fVelocity) * 100.0f);
 		m_oVecLinePtrs[0]->setFillColor(sf::Color::Green);
-		RepositionLine(m_oVecLinePtrs[1], _v2fPosition, _v2fPosition + CMath::Normalize(_v2fSeekDesiredVelocity) * 100.0f);
+		RepositionLine(m_oVecLinePtrs[1], _v2fPosition, _v2fPosition + CMath::Normalize(_v2fDesiredVelocity) * 100.0f);
 		m_oVecLinePtrs[1]->setFillColor(sf::Color::Red);
 
 		//Set up the gizmos that are to be rendered.
@@ -97,11 +136,13 @@ void CGizmos::Wander(sf::Vector2f _v2fCirclePosition, sf::Vector2f _v2fEndDirect
 {
 	if (m_bEnabled == true)
 	{
+		//Create the needed number of line gizmos.
 		while (m_oVecLinePtrs.size() < 1)
 		{
 			CreateLine();
 		}
 
+		//Create the needed number of circle gizmos.
 		while (m_oVecCirclePtrs.size() < 1)
 		{
 			CreateCircle();

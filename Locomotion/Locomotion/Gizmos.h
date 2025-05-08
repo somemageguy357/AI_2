@@ -16,7 +16,9 @@ public:
 
 	static bool GetGizmosEnabled();
 
-	void Seek(sf::Vector2f _v2fPosition, sf::Vector2f _v2fVelocity, sf::Vector2f _v2fSeekDesiredVelocity);
+	void Arrival(sf::Vector2f _v2fPosition, sf::Vector2f _v2fVelocity, sf::Vector2f _v2fDesiredVelocity, sf::Vector2f _v2fStopPoint, float _fStopRadius);
+
+	void Seek(sf::Vector2f _v2fPosition, sf::Vector2f _v2fVelocity, sf::Vector2f _v2fDesiredVelocity);
 
 	void Wander(sf::Vector2f _v2fCirclePosition, sf::Vector2f _v2fEndDirection, float _fRadius);
 

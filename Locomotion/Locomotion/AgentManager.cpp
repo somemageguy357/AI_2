@@ -92,5 +92,6 @@ void CAgentManager::PositionAgents(int _iCount)
 		v2fRandPos.y = rand() % (iMaxY - iMinY) + iMinY;
 
 		m_oVecAgentPtrs[i]->SetPosition(v2fRandPos);
+		m_oVecAgentPtrs[i]->ResetVelocity();
 	}
 }

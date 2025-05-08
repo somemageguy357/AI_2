@@ -24,13 +24,22 @@ public:
 		n,
 
 		//--------------------------SET BEHAVIOURS
-		AISeek,
-		AIWander,
 		AIArrival,
+		AISeek,
+		AIPursuit,
+		AIWander,
 		AIFlock,
 
 		//--------------------------GIZMOS
 		ToggleGizmos,
+
+		//--------------------------ARRIVAL
+		IncArrivalWeighting,
+		DecArrivalWeighting,
+		IncArrivalMSF,
+		DecArrivalMSF,
+		IncArrivalStoppingRadius,
+		DecArrivalStoppingRadius,
 
 		//--------------------------SEEK
 		IncSeekWeighting,

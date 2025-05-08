@@ -18,6 +18,7 @@ Mail : Connor.Galvin@mds.ac.nz
 #include "UISeparationPanel.h"
 #include "UICohesionPanel.h"
 #include "UIAlignmentPanel.h"
+#include "UIArrivalPanel.h"
 
 //Static class that handles all UI elements and runs their Update and Render functions.
 class CUIManager
@@ -51,6 +52,10 @@ public:
 
 	static void CloseAllPanels();
 
+	static void SetAgentSpeedText(float _fValue);
+
+	static CUIArrivalPanel* GetArrivalPanel();
+
 	static CUISeekPanel* GetSeekPanel();
 
 	static CUIWanderPanel* GetWanderPanel();
@@ -75,6 +80,9 @@ private:
 
 	static sf::Font* m_poUIFont;
 
+	static CUIText* m_poAgentSpeedText;
+
+	static CUIArrivalPanel* m_poArrivalPanel;
 	static CUISeekPanel* m_poSeekPanel;
 	static CUIWanderPanel* m_poWanderPanel;
 	static CUISeparationPanel* m_poSeparationPanel;
@@ -108,7 +116,7 @@ private:
 	/// <param name="_sTextString:">The string of the text element.</param>
 	/// <param name="_oColour:">The colour of the text element.</param>
 	/// <param name="_bEnabled:">Allows for updating and rendering if true.</param>
-	static void CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, CUIElement::EAlignment _eAlignment, bool _bEnabled);
+	static CUIText* CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, CUIElement::EAlignment _eAlignment, bool _bEnabled);
 
 	CUIManager() = delete;
 	~CUIManager() = delete;
