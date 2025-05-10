@@ -8,6 +8,7 @@
 float CAgentBehaviourValues::m_fAgentSpeedMultiplier = 0.0f;
 
 float CAgentBehaviourValues::m_fArrivalWeighting = 0.0f;
+float CAgentBehaviourValues::m_fArrivalStrength = 0.0f;
 float CAgentBehaviourValues::m_fArrivalMaxSteerForce = 0.0f;
 float CAgentBehaviourValues::m_fArrivalStoppingRadius = 0.0f;
 
@@ -67,6 +68,11 @@ void CAgentBehaviourValues::InitBehaviour(EBehaviour _eBehaviour)
 		InitWanderBehaviour();
 	}
 
+	else if (_eBehaviour == EBehaviour::Pursuit)
+	{
+		InitWanderBehaviour();
+	}
+
 	CUIManager::SetAgentSpeedText(m_fAgentSpeedMultiplier);
 	CUIManager::PositionPanels();
 }
@@ -89,14 +95,14 @@ void CAgentBehaviourValues::InitArrivalBehaviour()
 	m_fAgentSpeedMultiplier = 20.0f;
 
 	m_fArrivalWeighting = 1.0f;
-	//m_fSeekStrength = 8.0f;
+	m_fArrivalStrength = 20.0f;
 	m_fArrivalMaxSteerForce = 1.0f;
 	m_fArrivalStoppingRadius = 100.0f;
 
 	CUIArrivalPanel* poArrivalPanel = CUIManager::GetArrivalPanel();
 	poArrivalPanel->SetEnabled(true);
 	poArrivalPanel->SetWeightText(m_fArrivalWeighting);
-	//poArrivalPanel->SetStrengthText(m_fSeekStrength);
+	poArrivalPanel->SetStrengthText(m_fArrivalStrength);
 	poArrivalPanel->SetMaxSteerForceText(m_fArrivalMaxSteerForce);
 	poArrivalPanel->SetStoppingRadiusText(m_fArrivalStoppingRadius);
 
@@ -107,35 +113,41 @@ void CAgentBehaviourValues::InitArrivalBehaviour()
 
 void CAgentBehaviourValues::InitFlockBehaviour()
 {
-	//----------------------------------------------------------WANDER
-	//m_fSeekWeighting = 1.0f;
-	//m_fSeekStrength = 2.0f;
-	//m_fSeekMaxSteerForce = 2.0f;
+	m_fAgentSpeedMultiplier = 10.0f;
 
-	//CUISeekPanel* poWanderPanel = CUIManager::GetSeekPanel();
-	//poWanderPanel->SetEnabled(true);
-	//poWanderPanel->SetWeightText(m_fSeekWeighting);
-	//poWanderPanel->SetStrengthText(m_fSeekStrength);
-	//poWanderPanel->SetMaxSteerForceText(m_fSeekMaxSteerForce);
+	//----------------------------------------------------------WANDER
+	m_fWanderWeighting = 0.75f;
+	m_fWanderStrength = 10.0f;
+	m_fWanderMaxSteerForce = 1.0f;
+	m_fWanderRadius = 50.0f;
+	m_fWanderDistance = m_fWanderRadius + 10.0f;
+
+	CUIWanderPanel* poWanderPanel = CUIManager::GetWanderPanel();
+	poWanderPanel->SetEnabled(true);
+	poWanderPanel->SetWeightText(m_fWanderWeighting);
+	poWanderPanel->SetStrengthText(m_fWanderStrength);
+	poWanderPanel->SetMaxSteerForceText(m_fWanderMaxSteerForce);
+	poWanderPanel->SetRadiusText(m_fWanderRadius);
+	poWanderPanel->SetDistanceText(m_fWanderDistance);
 
 	//----------------------------------------------------------SEPARATION
 	m_fSeparationWeighting = 1.0f;
-	m_fSeparationStrength = 2.0f;
-	m_fSeparationMaxSteerForce = 2.0f;
-	m_fSeparationNeighbourhoodRadius = 2.0f;
+	m_fSeparationStrength = 15.0f;
+	m_fSeparationMaxSteerForce = 1.0f;
+	m_fSeparationNeighbourhoodRadius = 50.0f;
 
 	CUISeparationPanel* poSeparationPanel = CUIManager::GetSeparationPanel();
 	poSeparationPanel->SetEnabled(true);
 	poSeparationPanel->SetWeightText(m_fSeparationWeighting);
 	poSeparationPanel->SetStrengthText(m_fSeparationStrength);
 	poSeparationPanel->SetMaxSteerForceText(m_fSeparationMaxSteerForce);
-	poSeparationPanel->SetNeighbourhoodRadiusText(m_fSeparationMaxSteerForce);
+	poSeparationPanel->SetNeighbourhoodRadiusText(m_fSeparationNeighbourhoodRadius);
 
 	//----------------------------------------------------------COHESION
-	m_fCohesionWeighting = 0.5f;
-	m_fCohesionStrength = 2.0f;
-	m_fCohesionMaxSteerForce = 2.0f;
-	m_fCohesionNeighbourhoodRadius = 2.0f;
+	m_fCohesionWeighting = 0.4f;
+	m_fCohesionStrength = 10.0f;
+	m_fCohesionMaxSteerForce = 1.0f;
+	m_fCohesionNeighbourhoodRadius = 100.0f;
 	m_bCohesionIncludeSelf = false;
 
 	CUICohesionPanel* poCohesionPanel = CUIManager::GetCohesionPanel();
@@ -143,21 +155,21 @@ void CAgentBehaviourValues::InitFlockBehaviour()
 	poCohesionPanel->SetWeightText(m_fCohesionWeighting);
 	poCohesionPanel->SetStrengthText(m_fCohesionStrength);
 	poCohesionPanel->SetMaxSteerForceText(m_fCohesionMaxSteerForce);
-	poCohesionPanel->SetNeighbourhoodRadiusText(m_fCohesionMaxSteerForce);
+	poCohesionPanel->SetNeighbourhoodRadiusText(m_fCohesionNeighbourhoodRadius);
 	poCohesionPanel->SetIncludeSelfText(m_bCohesionIncludeSelf);
 
 	//----------------------------------------------------------ALIGNMENT
-	m_fAlignmentWeighting = 0.2f;
-	m_fAlignmentStrength = 2.0f;
-	m_fAlignmentMaxSteerForce = 2.0f;
-	m_fAlignmentNeighbourhoodRadius = 2.0f;
+	m_fAlignmentWeighting = 0.6f;
+	m_fAlignmentStrength = 10.0f;
+	m_fAlignmentMaxSteerForce = 1.0f;
+	m_fAlignmentNeighbourhoodRadius = 200.0f;
 
 	CUIAlignmentPanel* poAlignmentPanel = CUIManager::GetAlignmentPanel();
 	poAlignmentPanel->SetEnabled(true);
 	poAlignmentPanel->SetWeightText(m_fAlignmentWeighting);
 	poAlignmentPanel->SetStrengthText(m_fAlignmentStrength);
 	poAlignmentPanel->SetMaxSteerForceText(m_fAlignmentMaxSteerForce);
-	poAlignmentPanel->SetNeighbourhoodRadiusText(m_fAlignmentMaxSteerForce);
+	poAlignmentPanel->SetNeighbourhoodRadiusText(m_fAlignmentNeighbourhoodRadius);
 
 	CAgentManager::SpawnAgents(50);
 }
@@ -199,7 +211,7 @@ void CAgentBehaviourValues::InitWanderBehaviour()
 	poWanderPanel->SetRadiusText(m_fWanderRadius);
 	poWanderPanel->SetDistanceText(m_fWanderDistance);
 
-	CAgentManager::SpawnAgents(10);
+	CAgentManager::SpawnAgents(1);
 }
 
 //---------------------------------------------------------------------------------------------BEHAVIOUR VALUES
@@ -220,6 +232,18 @@ void CAgentBehaviourValues::SetArrivalWeighting(float _fWeighting)
 float CAgentBehaviourValues::GetArrivalWeighting()
 {
 	return m_fArrivalWeighting;
+}
+
+void CAgentBehaviourValues::SetArrivalStrength(float _fStrength)
+{
+	m_fArrivalStrength = CMath::ClampMin(_fStrength, 0.0f);
+
+	CUIManager::GetArrivalPanel()->SetStrengthText(m_fArrivalStrength);
+}
+
+float CAgentBehaviourValues::GetArrivalStrength()
+{
+	return m_fArrivalStrength;
 }
 
 void CAgentBehaviourValues::SetArrivalMaxSteerForce(float _fMaxSteerForce)

@@ -20,8 +20,8 @@ CUISeparationPanel::CUISeparationPanel(sf::Vector2f _v2fTopLeftPosition)
 	m_poIncrementStrengthBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 75 }, CUIButton::EButtonType::IncSeparationStrength, EAlignment::TopLeft, 14, "+1", m_bEnabled);
 	m_poDecrementMaxSteerForceBtn = CreateButton({ 30, 20 }, { fX + 10, fY + 110 }, CUIButton::EButtonType::DecSeparationMSF, EAlignment::TopLeft, 14, "-1", m_bEnabled);
 	m_poIncrementMaxSteerForceBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 110 }, CUIButton::EButtonType::IncSeparationMSF, EAlignment::TopLeft, 14, "+1", m_bEnabled);
-	m_poDecNeighbourhoodRadiusBtn = CreateButton({ 30, 20 }, { fX + 10, fY + 145 }, CUIButton::EButtonType::DecSeparationNHR, EAlignment::TopLeft, 14, "-1", m_bEnabled);
-	m_poIncNeighbourhoodRadiusBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 145 }, CUIButton::EButtonType::IncSeparationNHR, EAlignment::TopLeft, 14, "+1", m_bEnabled);
+	m_poDecNeighbourhoodRadiusBtn = CreateButton({ 30, 20 }, { fX + 10, fY + 145 }, CUIButton::EButtonType::DecSeparationNHR, EAlignment::TopLeft, 14, "-5", m_bEnabled);
+	m_poIncNeighbourhoodRadiusBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 145 }, CUIButton::EButtonType::IncSeparationNHR, EAlignment::TopLeft, 14, "+5", m_bEnabled);
 }
 
 CUISeparationPanel::~CUISeparationPanel() {}

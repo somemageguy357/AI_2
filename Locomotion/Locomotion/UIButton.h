@@ -36,6 +36,8 @@ public:
 		//--------------------------ARRIVAL
 		IncArrivalWeighting,
 		DecArrivalWeighting,
+		IncArrivalStrength,
+		DecArrivalStrength, 
 		IncArrivalMSF,
 		DecArrivalMSF,
 		IncArrivalStoppingRadius,

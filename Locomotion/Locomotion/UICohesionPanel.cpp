@@ -21,8 +21,8 @@ CUICohesionPanel::CUICohesionPanel(sf::Vector2f _v2fTopLeftPosition)
 	m_poIncrementStrengthBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 75 }, CUIButton::EButtonType::IncCohesionStrength, EAlignment::TopLeft, 14, "+1", m_bEnabled);
 	m_poDecrementMaxSteerForceBtn = CreateButton({ 30, 20 }, { fX + 10, fY + 110 }, CUIButton::EButtonType::DecCohesionMSF, EAlignment::TopLeft, 14, "-1", m_bEnabled);
 	m_poIncrementMaxSteerForceBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 110 }, CUIButton::EButtonType::IncCohesionMSF, EAlignment::TopLeft, 14, "+1", m_bEnabled);
-	m_poDecNeighbourhoodRadiusBtn = CreateButton({ 30, 20 }, { fX + 10, fY + 145 }, CUIButton::EButtonType::DecCohesionNHR, EAlignment::TopLeft, 14, "-1", m_bEnabled);
-	m_poIncNeighbourhoodRadiusBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 145 }, CUIButton::EButtonType::IncCohesionNHR, EAlignment::TopLeft, 14, "+1", m_bEnabled);
+	m_poDecNeighbourhoodRadiusBtn = CreateButton({ 30, 20 }, { fX + 10, fY + 145 }, CUIButton::EButtonType::DecCohesionNHR, EAlignment::TopLeft, 14, "-5", m_bEnabled);
+	m_poIncNeighbourhoodRadiusBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 145 }, CUIButton::EButtonType::IncCohesionNHR, EAlignment::TopLeft, 14, "+5", m_bEnabled);
 	m_poToggleIncludeSelfBtn = CreateButton({ 70, 20 }, { fX + 10, fY + 180 }, CUIButton::EButtonType::ToggleCohesionIncludeSelf, EAlignment::TopLeft, 14, "Toggle", m_bEnabled);
 }
 

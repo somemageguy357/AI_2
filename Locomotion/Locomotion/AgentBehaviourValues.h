@@ -9,6 +9,7 @@ public:
 		Flock,
 		Seek,
 		Wander,
+		Pursuit,
 	};
 
 	static void InitBehaviour(EBehaviour _eBehaviour);
@@ -18,6 +19,8 @@ public:
 
 	static void SetArrivalWeighting(float _fWeighting);
 	static float GetArrivalWeighting();
+	static void SetArrivalStrength(float _fStrength);
+	static float GetArrivalStrength();
 	static void SetArrivalMaxSteerForce(float _fMaxSteerForce);
 	static float GetArrivalMaxSteerForce();
 	static void SetArrivalStoppingRadius(float _fRadius);
@@ -82,6 +85,7 @@ private:
 	static float m_fAgentSpeedMultiplier;
 
 	static float m_fArrivalWeighting;
+	static float m_fArrivalStrength;
 	static float m_fArrivalMaxSteerForce;
 	static float m_fArrivalStoppingRadius;
 

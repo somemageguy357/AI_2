@@ -49,19 +49,34 @@ void CAgent::Update()
 	{
 		//perform behaviour
 
-		if (CAgentBehaviourValues::GetArrivalWeighting() > 0.0f)
+		if (CAgentBehaviourValues::GetArrivalWeighting() > 0.01f)
 		{
 			Arrival();
 		}
 
-		if (CAgentBehaviourValues::GetSeekWeighting() > 0.0f)
+		if (CAgentBehaviourValues::GetSeekWeighting() > 0.01f)
 		{
-			Seek();
+			Seek(CMouseCircle::GetInstance()->GetPosition());
 		}
 
-		if (CAgentBehaviourValues::GetWanderWeighting() > 0.0f)
+		if (CAgentBehaviourValues::GetWanderWeighting() > 0.01f)
 		{
 			Wander();
+		}
+
+		if (CAgentBehaviourValues::GetSeparationWeighting() > 0.01f)
+		{
+			Separation();
+		}
+
+		if (CAgentBehaviourValues::GetCohesionWeighting() > 0.01f)
+		{
+			Cohesion();
+		}
+
+		if (CAgentBehaviourValues::GetAlignmentWeighting() > 0.01f)
+		{
+			Alignment();
 		}
 
 		Translate();
@@ -74,8 +89,6 @@ void CAgent::LateUpdate()
 {
 	if (m_bEnabled == true)
 	{
-		//m_oGizmos.Update(this, CAgentManager::GetAgents());
-
 		if (CAgentBehaviourValues::GetArrivalWeighting() > 0.0f)
 		{
 			m_oGizmos.Arrival(m_oShape.getPosition(), m_v2fVelocity, m_v2fArrivalDesiredVelocity, CMouseCircle::GetInstance()->GetPosition(), CAgentBehaviourValues::GetArrivalStoppingRadius());
@@ -125,49 +138,53 @@ void CAgent::ResetVelocity()
 	m_v2fVelocity = { 0.0f, 0.0f };
 }
 
+void CAgent::SetPursuitTarget(bool _bIsTarget)
+{
+	m_bPursuitTarget = _bIsTarget;
+
+	if (m_bPursuitTarget == true)
+	{
+		m_oShape.setFillColor(sf::Color::Cyan);
+	}
+
+	else
+	{
+		m_oShape.setFillColor(sf::Color::White);
+	}
+}
+
 void CAgent::Arrival()
 {
 	sf::Vector2f v2fTargetPosition = CMouseCircle::GetInstance()->GetPosition();
 
-	m_v2fArrivalDesiredVelocity = CMath::TargetDirection(v2fTargetPosition, m_oShape.getPosition());
+	m_v2fArrivalDesiredVelocity = v2fTargetPosition - m_oShape.getPosition();
 
 	float fDistance = CMath::GetMagnitude(m_v2fArrivalDesiredVelocity);
 	float fStoppingRadius = CAgentBehaviourValues::GetArrivalStoppingRadius();
 
 	if (fDistance < fStoppingRadius)
 	{
-		m_v2fArrivalDesiredVelocity = CMath::Normalize(m_v2fArrivalDesiredVelocity) * 10.0f * (fDistance / fStoppingRadius);
-		std::cout << (fDistance / fStoppingRadius) << std::endl;
+		m_v2fArrivalDesiredVelocity = CMath::Normalize(m_v2fArrivalDesiredVelocity) * m_fMaxSpeed * (fDistance / fStoppingRadius);
 	}
 
 	else
 	{
-		m_v2fArrivalDesiredVelocity = CMath::Normalize(m_v2fArrivalDesiredVelocity) * 10.0f;
+		m_v2fArrivalDesiredVelocity = CMath::Normalize(m_v2fArrivalDesiredVelocity) * m_fMaxSpeed;
 	}
 
-	//--
-	//sf::Vector2f v2fSteerForce = m_v2fArrivalDesiredVelocity - m_v2fVelocity;
-
-	//m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity + v2fSteerForce, 10.0f);
-
-	//m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetArrivalWeighting() * CTimeManager::GetDeltaTime();
-
-	//^ works straight to point.
-
 	sf::Vector2f v2fSteerForce = m_v2fArrivalDesiredVelocity - m_v2fVelocity;
+
 	v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetArrivalMaxSteerForce());
 
-	//m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity + v2fSteerForce, 10.0f);
-
-	m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetArrivalWeighting() * CTimeManager::GetDeltaTime();
-	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, CMath::GetMagnitude(m_v2fArrivalDesiredVelocity));
+	m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetArrivalStrength() * CAgentBehaviourValues::GetArrivalWeighting() * CTimeManager::GetDeltaTime();
+	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
 }
 
-void CAgent::Seek()
+void CAgent::Seek(sf::Vector2f _v2fTargetPosition)
 {
-	sf::Vector2f v2fOffset = CMath::TargetDirection(CMouseCircle::GetInstance()->GetPosition(), m_oShape.getPosition());
+	sf::Vector2f v2fOffset = _v2fTargetPosition - m_oShape.getPosition();
 
-	m_v2fSeekDesiredVelocity = CMath::Normalize(v2fOffset) * 10.0f;
+	m_v2fSeekDesiredVelocity = CMath::Normalize(v2fOffset) * m_fMaxSpeed;
 
 	//--
 
@@ -176,7 +193,12 @@ void CAgent::Seek()
 	v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetSeekMaxSteerForce());
 
 	m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetSeekStrength() * CAgentBehaviourValues::GetSeekWeighting() * CTimeManager::GetDeltaTime();
-	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, 10.0f);
+	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
+}
+
+void CAgent::Pursuit()
+{
+	sf::Vector2f v2fEstimatedPos = { 0.0f, 0.0f };
 }
 
 void CAgent::Wander()
@@ -201,7 +223,7 @@ void CAgent::Wander()
 	//--
 
 	sf::Vector2f v2fActualTarget = v2fCirclePosition + v2fWanderDirection * CAgentBehaviourValues::GetWanderRadius();
-	sf::Vector2f v2fSteerForce = CMath::TargetDirection(v2fActualTarget, m_oShape.getPosition());
+	sf::Vector2f v2fSteerForce = v2fActualTarget - m_oShape.getPosition();
 
 	//--
 
@@ -209,7 +231,139 @@ void CAgent::Wander()
 	v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetWanderMaxSteerForce());
 
 	m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetWanderStrength() * CAgentBehaviourValues::GetWanderWeighting() * CTimeManager::GetDeltaTime();
-	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, 100.0f);
+	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed * 10.0f);
+}
+
+void CAgent::Separation()
+{
+	sf::Vector2f v2fSelfPos = m_oShape.getPosition();
+	sf::Vector2f v2fDifAve = { 0.0f, 0.0f };
+	int iCount = 0;
+
+	std::vector<CAgent*>* poVecAgentPtrs = CAgentManager::GetAgents();
+
+	for (int i = 0; i < poVecAgentPtrs->size(); i++)
+	{
+		if ((*poVecAgentPtrs)[i] == this)
+		{
+			continue;
+		}
+
+		sf::Vector2f v2fOtherPos = (*poVecAgentPtrs)[i]->GetPosition();
+		sf::Vector2f v2fPosDif = v2fSelfPos - v2fOtherPos;
+
+		float fDistance = CMath::GetMagnitude(v2fPosDif);
+
+		if (fDistance < CAgentBehaviourValues::GetSeparationNeighbourhoodRadius())
+		{
+			sf::Vector2f v2fNormDif = CMath::Normalize(v2fPosDif);
+			v2fNormDif /= fDistance * 2.0f;
+			v2fDifAve += v2fNormDif;
+			iCount += 1;
+		}
+	}
+
+	if (iCount > 0)
+	{
+		v2fDifAve /= (float)iCount;
+		v2fDifAve = CMath::Normalize(v2fDifAve) * m_fMaxSpeed;
+	}
+
+	//--
+
+	sf::Vector2f v2fSteerForce = v2fDifAve - m_v2fVelocity;
+	v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetSeparationMaxSteerForce());
+
+	m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetSeparationStrength() * CAgentBehaviourValues::GetSeparationWeighting() * CTimeManager::GetDeltaTime();
+	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
+}
+
+void CAgent::Cohesion()
+{
+	sf::Vector2f v2fSelfPos = m_oShape.getPosition();
+	sf::Vector2f v2fPosAve = { 0.0f, 0.0f };
+	int iCount = 0;
+
+	std::vector<CAgent*>* poVecAgentPtrs = CAgentManager::GetAgents();
+
+	for (int i = 0; i < poVecAgentPtrs->size(); i++)
+	{
+		if ((*poVecAgentPtrs)[i] == this && CAgentBehaviourValues::GetCohesionIncludeSelf() == false)
+		{
+			continue;
+		}
+
+		sf::Vector2f v2fOtherPos = (*poVecAgentPtrs)[i]->GetPosition();
+
+		float fDistance = CMath::GetMagnitude(v2fOtherPos - v2fSelfPos);
+
+		if (fDistance < CAgentBehaviourValues::GetCohesionNeighbourhoodRadius())
+		{
+			v2fPosAve += v2fOtherPos;
+			iCount += 1;
+		}
+	}
+
+	if (iCount > 0)
+	{
+		m_v2fCohesionCenterOfMass = v2fPosAve /= (float)iCount;
+		sf::Vector2f v2fDesiredVelocity = CMath::Normalize(m_v2fCohesionCenterOfMass - v2fSelfPos) * m_fMaxSpeed;
+
+		//--
+
+		sf::Vector2f v2fSteerForce = v2fDesiredVelocity - m_v2fVelocity;
+		v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetCohesionMaxSteerForce());
+
+		m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetCohesionStrength() * CAgentBehaviourValues::GetCohesionWeighting() * CTimeManager::GetDeltaTime();
+		m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
+	}
+
+	else
+	{
+		m_v2fCohesionCenterOfMass = m_oShape.getPosition();
+	}
+}
+
+void CAgent::Alignment()
+{
+	sf::Vector2f v2fSelfPos = m_oShape.getPosition();
+	sf::Vector2f v2fVelocityAve = { 0.0f, 0.0f };
+	int iCount = 0;
+
+	std::vector<CAgent*>* poVecAgentPtrs = CAgentManager::GetAgents();
+
+	for (int i = 0; i < poVecAgentPtrs->size(); i++)
+	{
+		if ((*poVecAgentPtrs)[i] == this)
+		{
+			continue;
+		}
+
+		sf::Vector2f v2fOtherVelocity = (*poVecAgentPtrs)[i]->m_v2fVelocity;
+		sf::Vector2f v2fOtherPos = (*poVecAgentPtrs)[i]->GetPosition();
+
+		float fDistance = CMath::GetMagnitude(v2fOtherPos - v2fSelfPos);
+
+		if (fDistance < CAgentBehaviourValues::GetAlignmentNeighbourhoodRadius())
+		{
+			v2fVelocityAve += v2fOtherVelocity;
+			iCount += 1;
+		}
+	}
+
+	if (iCount > 0)
+	{
+		v2fVelocityAve /= (float)iCount;
+		v2fVelocityAve = CMath::Normalize(v2fVelocityAve) * m_fMaxSpeed;
+
+		//--
+
+		sf::Vector2f v2fSteerForce = v2fVelocityAve - m_v2fVelocity;
+		v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetAlignmentMaxSteerForce());
+
+		m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetAlignmentStrength() * CAgentBehaviourValues::GetAlignmentWeighting() * CTimeManager::GetDeltaTime();
+		m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
+	}
 }
 
 void CAgent::Translate()

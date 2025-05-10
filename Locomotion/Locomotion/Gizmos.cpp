@@ -18,31 +18,6 @@ CGizmos::~CGizmos()
 	}
 }
 
-void CGizmos::Update(CAgent* _poOwningAgent, std::vector<CAgent*>* _poVecAgentPtrs)
-{
-	//if (m_bEnabled == true)
-	//{
-	//	if (m_oVecLinePtrs.size() < _poVecAgentPtrs->size() - 1)
-	//	{
-	//		for (size_t i = m_oVecLinePtrs.size(); i < _poVecAgentPtrs->size() - 1; i++)
-	//		{
-	//			CreateLine();
-	//		}
-	//	}
-
-	//	int iLine = 0;
-
-	//	for (size_t iCycle = 0; iCycle < _poVecAgentPtrs->size(); iCycle++)
-	//	{
-	//		if ((*_poVecAgentPtrs)[iCycle] != _poOwningAgent)
-	//		{
-	//			RepositionLine(m_oVecLinePtrs[iLine], _poOwningAgent->GetPosition(), (*_poVecAgentPtrs)[iCycle]->GetPosition());
-	//			iLine += 1;
-	//		}
-	//	}
-	//}
-}
-
 void CGizmos::Render()
 {
 	for (size_t i = 0; i < m_oVecRenderedLinePtrs.size(); i++)

@@ -10,8 +10,6 @@ public:
 	CGizmos() {};
 	~CGizmos();
 
-	void Update(CAgent* _poOwningAgent, std::vector<CAgent*>* _poVecAgentPtrs);
-
 	static void ToggleGizmos();
 
 	static bool GetGizmosEnabled();

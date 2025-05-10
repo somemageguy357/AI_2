@@ -162,6 +162,16 @@ void CUIButton::OnClick()
 		CAgentBehaviourValues::SetArrivalWeighting(CAgentBehaviourValues::GetArrivalWeighting() + 0.05f);
 	}
 
+	else if (m_eButtonType == EButtonType::DecArrivalStrength)
+	{
+		CAgentBehaviourValues::SetArrivalStrength(CAgentBehaviourValues::GetArrivalStrength() - 1.0f);
+	}
+
+	else if (m_eButtonType == EButtonType::IncArrivalStrength)
+	{
+		CAgentBehaviourValues::SetArrivalStrength(CAgentBehaviourValues::GetArrivalStrength() + 1.0f);
+	}
+
 	else if (m_eButtonType == EButtonType::DecArrivalMSF)
 	{
 		CAgentBehaviourValues::SetArrivalMaxSteerForce(CAgentBehaviourValues::GetArrivalMaxSteerForce() - 1.0f);
@@ -246,12 +256,12 @@ void CUIButton::OnClick()
 
 	else if (m_eButtonType == EButtonType::DecWanderRadius)
 	{
-		CAgentBehaviourValues::SetWanderRadius(CAgentBehaviourValues::GetWanderRadius() - 1.0f);
+		CAgentBehaviourValues::SetWanderRadius(CAgentBehaviourValues::GetWanderRadius() - 5.0f);
 	}
 
 	else if (m_eButtonType == EButtonType::IncWanderRadius)
 	{
-		CAgentBehaviourValues::SetWanderRadius(CAgentBehaviourValues::GetWanderRadius() + 1.0f);
+		CAgentBehaviourValues::SetWanderRadius(CAgentBehaviourValues::GetWanderRadius() + 5.0f);
 	}
 
 	else if (m_eButtonType == EButtonType::DecWanderDistance)
@@ -297,12 +307,12 @@ void CUIButton::OnClick()
 
 	else if (m_eButtonType == EButtonType::DecSeparationNHR)
 	{
-		CAgentBehaviourValues::SetSeparationNeighbourhoodRadius(CAgentBehaviourValues::GetSeparationNeighbourhoodRadius() - 1.0f);
+		CAgentBehaviourValues::SetSeparationNeighbourhoodRadius(CAgentBehaviourValues::GetSeparationNeighbourhoodRadius() - 5.0f);
 	}
 
 	else if (m_eButtonType == EButtonType::IncSeparationNHR)
 	{
-		CAgentBehaviourValues::SetSeparationNeighbourhoodRadius(CAgentBehaviourValues::GetSeparationNeighbourhoodRadius() + 1.0f);
+		CAgentBehaviourValues::SetSeparationNeighbourhoodRadius(CAgentBehaviourValues::GetSeparationNeighbourhoodRadius() + 5.0f);
 	}
 
 	//------------------------------------------------------------------------------------------------------------COHESION
@@ -338,12 +348,12 @@ void CUIButton::OnClick()
 
 	else if (m_eButtonType == EButtonType::DecCohesionNHR)
 	{
-		CAgentBehaviourValues::SetCohesionNeighbourhoodRadius(CAgentBehaviourValues::GetCohesionNeighbourhoodRadius() - 1.0f);
+		CAgentBehaviourValues::SetCohesionNeighbourhoodRadius(CAgentBehaviourValues::GetCohesionNeighbourhoodRadius() - 5.0f);
 	}
 
 	else if (m_eButtonType == EButtonType::IncCohesionNHR)
 	{
-		CAgentBehaviourValues::SetCohesionNeighbourhoodRadius(CAgentBehaviourValues::GetCohesionNeighbourhoodRadius() + 1.0f);
+		CAgentBehaviourValues::SetCohesionNeighbourhoodRadius(CAgentBehaviourValues::GetCohesionNeighbourhoodRadius() + 5.0f);
 	}
 
 	else if (m_eButtonType == EButtonType::ToggleCohesionIncludeSelf)
@@ -384,12 +394,12 @@ void CUIButton::OnClick()
 
 	else if (m_eButtonType == EButtonType::DecAlignmentNHR)
 	{
-		CAgentBehaviourValues::SetAlignmentNeighbourhoodRadius(CAgentBehaviourValues::GetAlignmentNeighbourhoodRadius() - 1.0f);
+		CAgentBehaviourValues::SetAlignmentNeighbourhoodRadius(CAgentBehaviourValues::GetAlignmentNeighbourhoodRadius() - 5.0f);
 	}
 
 	else if (m_eButtonType == EButtonType::IncAlignmentNHR)
 	{
-		CAgentBehaviourValues::SetAlignmentNeighbourhoodRadius(CAgentBehaviourValues::GetAlignmentNeighbourhoodRadius() + 1.0f);
+		CAgentBehaviourValues::SetAlignmentNeighbourhoodRadius(CAgentBehaviourValues::GetAlignmentNeighbourhoodRadius() + 5.0f);
 	}
 	#pragma endregion
 

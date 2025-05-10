@@ -22,8 +22,8 @@ CUIWanderPanel::CUIWanderPanel(sf::Vector2f _v2fTopLeftPosition)
 	m_poIncrementStrengthBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 75 }, CUIButton::EButtonType::IncWanderStrength, EAlignment::TopLeft, 14, "+1", m_bEnabled);
 	m_poDecrementMaxSteerForceBtn = CreateButton({ 30, 20 }, { fX + 10, fY + 110 }, CUIButton::EButtonType::DecWanderMSF, EAlignment::TopLeft, 14, "-1", m_bEnabled);
 	m_poIncrementMaxSteerForceBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 110 }, CUIButton::EButtonType::IncWanderMSF, EAlignment::TopLeft, 14, "+1", m_bEnabled);
-	m_poDecrementRadiusBtn = CreateButton({ 30, 20 }, { fX + 10, fY + 145 }, CUIButton::EButtonType::DecWanderRadius, EAlignment::TopLeft, 14, "-1", m_bEnabled);
-	m_poIncrementRadiusBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 145 }, CUIButton::EButtonType::IncWanderRadius, EAlignment::TopLeft, 14, "+1", m_bEnabled);
+	m_poDecrementRadiusBtn = CreateButton({ 30, 20 }, { fX + 10, fY + 145 }, CUIButton::EButtonType::DecWanderRadius, EAlignment::TopLeft, 14, "-5", m_bEnabled);
+	m_poIncrementRadiusBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 145 }, CUIButton::EButtonType::IncWanderRadius, EAlignment::TopLeft, 14, "+5", m_bEnabled);
 	m_poDecrementDistanceBtn = CreateButton({ 30, 20 }, { fX + 10, fY + 180 }, CUIButton::EButtonType::DecWanderDistance, EAlignment::TopLeft, 14, "-1", m_bEnabled);
 	m_poIncrementDistanceBtn = CreateButton({ 30, 20 }, { fX + 50, fY + 180 }, CUIButton::EButtonType::IncWanderDistance, EAlignment::TopLeft, 14, "+1", m_bEnabled);
 }

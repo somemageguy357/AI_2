@@ -16,8 +16,6 @@ public:
 
 	static float Distance(sf::Vector2f _v2fPoint1, sf::Vector2f _v2fPoint2);
 
-	static sf::Vector2f TargetDirection(sf::Vector2f _v2fTargetPos, sf::Vector2f _v2fSelfPos);
-
 	static float Abs(float _fValue);
 
 	static const float PI();
