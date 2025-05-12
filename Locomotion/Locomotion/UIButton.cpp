@@ -84,6 +84,7 @@ void CUIButton::SetPosition(sf::Vector2f _v2fPosition)
 {
 	m_oButtonShape.setPosition(_v2fPosition);
 
+	//Update the button's text position, if it exists.
 	if (m_poButtonText != nullptr)
 	{
 		sf::Vector2f v2fTextPosition =

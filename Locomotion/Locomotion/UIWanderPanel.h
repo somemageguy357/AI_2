@@ -1,20 +1,57 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : UIWanderPanel.h
+Description : Inheriting from UIPanel, contains UI buttons and text elements associated with the wander agent behaviour.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
+
 #pragma once
 #include "UIPanel.h"
 
 class CUIWanderPanel : public CUIPanel
 {
 public:
+	/// <summary>
+	/// Creates a panel and setups up all text and button UI elements.
+	/// </summary>
+	/// <param name="_v2fTopLeftPosition:">The top-left anchor position of the panel in window space.</param>
 	CUIWanderPanel(sf::Vector2f _v2fTopLeftPosition);
+
 	~CUIWanderPanel();
 
+	/// <summary>
+	/// Sets the string for the Weight text to display the given value.
+	/// </summary>
+	/// <param name="_fValue:">The value to display.</param>
 	void SetWeightText(float _fValue);
 
+	/// <summary>
+	/// Sets the string for the Strength text to display the given value.
+	/// </summary>
+	/// <param name="_fValue:">The value to display.</param>
 	void SetStrengthText(float _fValue);
 
+	/// <summary>
+	/// Sets the string for the Max Steer Force text to display the given value.
+	/// </summary>
+	/// <param name="_fValue:">The value to display.</param>
 	void SetMaxSteerForceText(float _fValue);
 
+	/// <summary>
+	/// Sets the string for the Radius text to display the given value.
+	/// </summary>
+	/// <param name="_fValue:">The value to display.</param>
 	void SetRadiusText(float _fValue);
 
+	/// <summary>
+	/// Sets the string for the Distance text to display the given value.
+	/// </summary>
+	/// <param name="_fValue:">The value to display.</param>
 	void SetDistanceText(float _fValue);
 
 private:

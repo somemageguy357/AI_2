@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : Utilities.cpp
+Description : Contains function definitions for Utilities.h.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
+
 #include "Utilities.h"
 
 std::string CUtilities::FloatToString(float _fValue, int _iDecimals)

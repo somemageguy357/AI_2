@@ -101,8 +101,9 @@ public:
 	/// Creates a UI button element.
 	/// </summary>
 	/// <param name="_v2fSize:">The size of the button.</param>
-	/// <param name="_v2fPosition:">The position of the button (center-aligned).</param>
+	/// <param name="_v2fPosition:">The position of the button.</param>
 	/// <param name="_eButtonType:">Determines what event to perform when clicked.</param>
+	/// <param name="_eAlignment:">The anchor alignment of the button.</param>
 	/// <param name="_bEnabled:">Allows for updating and rendering if true.</param>
 	CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, EAlignment _eAlignment, bool _bEnabled);
 
@@ -112,6 +113,8 @@ public:
 	/// <param name="_v2fSize:">The size of the button.</param>
 	/// <param name="_v2fPosition:">The position of the button (center-aligned).</param>
 	/// <param name="_eButtonType:">Determines what event to perform when clicked.</param>
+	/// <param name="_eAlignment:">The anchor alignment of the button.</param>
+	/// <param name="_uiFontSize:">The font size of the button's text.</param>
 	/// <param name="_sButtonText:">The text that is displayed on the button.</param>
 	/// <param name="_bEnabled:">Allows for updating and rendering if true.</param>
 	CUIButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, EButtonType _eButtonType, EAlignment _eAlignment, unsigned int _uiFontSize, std::string _sButtonText, bool _bEnabled);
@@ -136,12 +139,28 @@ public:
 	/// </summary>
 	void Render() override;
 
+	/// <summary>
+	/// Sets the enabled state of the button. Also sets the enabled state of the button's text element, if it has one.
+	/// </summary>
+	/// <param name="_bEnabled:">The new enabled state.</param>
 	void SetEnabled(bool _bEnabled) override;
 
+	/// <summary>
+	/// Sets the anchor alignment of the button.
+	/// </summary>
+	/// <param name="_eAlignment:">The alignment type to be set to.</param>
 	void SetAlignment(EAlignment _eAlignment) override;
 
+	/// <summary>
+	/// Returns a pointer to the buttons shape.
+	/// </summary>
+	/// <returns>A pointer to the buttons shape.</returns>
 	sf::RectangleShape* GetShape();
 
+	/// <summary>
+	/// Sets the position of the button. Also updates the position of the button's text element, if it has one.
+	/// </summary>
+	/// <param name="_v2fPosition:">The new position for the button.</param>
 	void SetPosition(sf::Vector2f _v2fPosition);
 
 private:

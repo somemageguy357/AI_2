@@ -25,13 +25,13 @@ class CUIManager
 {
 public:
 	/// <summary>
-	/// Calls Update() in all UI elements.
+	/// Calls Update() for all UI elements.
 	/// </summary>
 	/// <param name="_bIsClicking:">If the left mouse button is down. Used for button clicks.</param>
 	static void Update(bool _bIsClicking);
 
 	/// <summary>
-	/// Calls Render() in all UI elements.
+	/// Calls Render() for all UI elements.
 	/// </summary>
 	static void Render();
 
@@ -46,26 +46,68 @@ public:
 	/// <returns></returns>
 	static sf::Font* GetUIFont();
 
+	/// <summary>
+	/// All UI buttons add themselves to the manager's button vector this way.
+	/// </summary>
+	/// <param name="_poButton:">Pointer to the button that is to be added.</param>
 	static void AddToButtonVector(CUIButton* _poButton);
 
+	/// <summary>
+	/// Removes the given button from the manager's button vector.
+	/// </summary>
+	/// <param name="_poButton":>The button to remove.</param>
 	static void RemoveFromButtonVector(CUIButton* _poButton);
 
+	/// <summary>
+	/// Closes all UI Panels.
+	/// </summary>
 	static void CloseAllPanels();
 
+	/// <summary>
+	/// Sets the text string representing the speed value of AI agents.
+	/// </summary>
+	/// <param name="_fValue:">The value to set to.</param>
 	static void SetAgentSpeedText(float _fValue);
 
+	/// <summary>
+	/// Returns a pointer to the Arrival panel.
+	/// </summary>
+	/// <returns>A pointer to the Arrival panel.</returns>
 	static CUIArrivalPanel* GetArrivalPanel();
 
+	/// <summary>
+	/// Returns a pointer to the Seek panel.
+	/// </summary>
+	/// <returns>A pointer to the Seek panel.</returns>
 	static CUISeekPanel* GetSeekPanel();
 
+	/// <summary>
+	/// Returns a pointer to the Wander panel.
+	/// </summary>
+	/// <returns>A pointer to the Wander panel.</returns>
 	static CUIWanderPanel* GetWanderPanel();
 
+	/// <summary>
+	/// Returns a pointer to the Separation panel.
+	/// </summary>
+	/// <returns>A pointer to the Separation panel.</returns>
 	static CUISeparationPanel* GetSeparationPanel();
 
+	/// <summary>
+	/// Returns a pointer to the Cohesion panel.
+	/// </summary>
+	/// <returns>A pointer to the Cohesion panel.</returns>
 	static CUICohesionPanel* GetCohesionPanel();
 
+	/// <summary>
+	/// Returns a pointer to the Alignment panel.
+	/// </summary>
+	/// <returns>A pointer to the Alignment panel.</returns>
 	static CUIAlignmentPanel* GetAlignmentPanel();
 
+	/// <summary>
+	/// Repositions all enabled panels horizontally.
+	/// </summary>
 	static void PositionPanels();
 
 	/// <summary>
@@ -74,8 +116,8 @@ public:
 	static void Destroy();
 
 private:
-	static std::vector<CUIElement*> m_oVecUIElementPtrs;
-	static std::vector<CUIButton*> m_oVecButtonPtrs;
+	static std::vector<CUIElement*> m_oVecManagerUIElementPtrs; //UI elements created only in the manager itself.
+	static std::vector<CUIButton*> m_oVecButtonPtrs; //All UI buttons. All buttons add themselves to this vector.
 	static std::vector<CUIPanel*> m_oVecPanelPtrs;
 
 	static sf::Font* m_poUIFont;

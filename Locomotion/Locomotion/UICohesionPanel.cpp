@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : UICohesionPanel.cpp
+Description : Contains function definitions for UICohesionPanel.h.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
+
 #include "UICohesionPanel.h"
 #include "Utilities.h"
 

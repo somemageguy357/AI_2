@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : UISeparationPanel.cpp
+Description : Contains function definitions for UISeparationPanel.h.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
+
 #include "UISeparationPanel.h"
 #include "Utilities.h"
 

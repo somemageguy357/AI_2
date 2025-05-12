@@ -22,6 +22,6 @@
   WindowManager.cpp
   Generating code
   Previous IPDB not found, fall back to full compilation.
-  All 723 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 742 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   Locomotion.vcxproj -> C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Release\Locomotion.exe

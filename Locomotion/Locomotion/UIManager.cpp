@@ -13,7 +13,7 @@ Mail : Connor.Galvin@mds.ac.nz
 #include "UIManager.h"
 #include "Utilities.h"
 
-std::vector<CUIElement*> CUIManager::m_oVecUIElementPtrs;
+std::vector<CUIElement*> CUIManager::m_oVecManagerUIElementPtrs;
 std::vector<CUIButton*> CUIManager::m_oVecButtonPtrs;
 std::vector<CUIPanel*> CUIManager::m_oVecPanelPtrs;
 
@@ -30,9 +30,9 @@ CUIAlignmentPanel* CUIManager::m_poAlignmentPanel = nullptr;
 
 void CUIManager::Update(bool _bIsClicking)
 {
-	for (size_t i = 0; i < m_oVecUIElementPtrs.size(); i++)
+	for (size_t i = 0; i < m_oVecManagerUIElementPtrs.size(); i++)
 	{
-		m_oVecUIElementPtrs[i]->Update();
+		m_oVecManagerUIElementPtrs[i]->Update();
 	}
 
 	for (size_t i = 0; i < m_oVecButtonPtrs.size(); i++)
@@ -44,9 +44,9 @@ void CUIManager::Update(bool _bIsClicking)
 
 void CUIManager::Render()
 {
-	for (size_t i = 0; i < m_oVecUIElementPtrs.size(); i++)
+	for (size_t i = 0; i < m_oVecManagerUIElementPtrs.size(); i++)
 	{
-		m_oVecUIElementPtrs[i]->Render();
+		m_oVecManagerUIElementPtrs[i]->Render();
 	}
 }
 
@@ -77,12 +77,12 @@ void CUIManager::InitUI()
 	m_poCohesionPanel = new CUICohesionPanel({ 0.0f, 510.0f });
 	m_poAlignmentPanel = new CUIAlignmentPanel({ 0.0f, 510.0f });
 
-	m_oVecUIElementPtrs.push_back(m_poArrivalPanel);
-	m_oVecUIElementPtrs.push_back(m_poSeekPanel);
-	m_oVecUIElementPtrs.push_back(m_poWanderPanel);
-	m_oVecUIElementPtrs.push_back(m_poSeparationPanel);
-	m_oVecUIElementPtrs.push_back(m_poCohesionPanel);
-	m_oVecUIElementPtrs.push_back(m_poAlignmentPanel);
+	m_oVecManagerUIElementPtrs.push_back(m_poArrivalPanel);
+	m_oVecManagerUIElementPtrs.push_back(m_poSeekPanel);
+	m_oVecManagerUIElementPtrs.push_back(m_poWanderPanel);
+	m_oVecManagerUIElementPtrs.push_back(m_poSeparationPanel);
+	m_oVecManagerUIElementPtrs.push_back(m_poCohesionPanel);
+	m_oVecManagerUIElementPtrs.push_back(m_poAlignmentPanel);
 
 	//Add panels to their own vector to make it easier to access them when closing them all.
 	m_oVecPanelPtrs.push_back(m_poArrivalPanel);
@@ -162,6 +162,7 @@ void CUIManager::PositionPanels()
 {
 	int iPanelsOpen = 0;
 
+	//Repositions all enabled panels horizontally.
 	for (size_t i = 0; i < m_oVecPanelPtrs.size(); i++)
 	{
 		if (m_oVecPanelPtrs[i]->GetEnabled() == true)
@@ -175,9 +176,9 @@ void CUIManager::PositionPanels()
 
 void CUIManager::Destroy()
 {
-	for (size_t i = 0; i < m_oVecUIElementPtrs.size(); i++)
+	for (size_t i = 0; i < m_oVecManagerUIElementPtrs.size(); i++)
 	{
-		delete m_oVecUIElementPtrs[i];
+		delete m_oVecManagerUIElementPtrs[i]; //Contains all panels as well as text and buttons created by the UI Manager.
 	}
 
 	delete m_poUIFont;
@@ -186,19 +187,19 @@ void CUIManager::Destroy()
 void CUIManager::CreateButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, CUIButton::EButtonType _eButtonType, CUIElement::EAlignment _eAlignment, bool _bEnabled)
 {
 	CUIButton* poButton = new CUIButton(_v2fSize, _v2fPosition, _eButtonType, _eAlignment, _bEnabled);
-	m_oVecUIElementPtrs.push_back(poButton);
+	m_oVecManagerUIElementPtrs.push_back(poButton);
 }
 
 void CUIManager::CreateButton(sf::Vector2f _v2fSize, sf::Vector2f _v2fPosition, CUIButton::EButtonType _eButtonType, CUIElement::EAlignment _eAlignment, unsigned int _uiFontSize, std::string _sButtonText, bool _bEnabled)
 {
 	CUIButton* poButton = new CUIButton(_v2fSize, _v2fPosition, _eButtonType, _eAlignment, _uiFontSize, _sButtonText, _bEnabled);
-	m_oVecUIElementPtrs.push_back(poButton);
+	m_oVecManagerUIElementPtrs.push_back(poButton);
 }
 
 CUIText* CUIManager::CreateText(unsigned int _uiFontSize, sf::Vector2f _v2fPosition, std::string _sTextString, sf::Color _oColour, CUIElement::EAlignment _eAlignment, bool _bEnabled)
 {
 	CUIText* poText = new CUIText(_uiFontSize, _v2fPosition, _sTextString, _oColour, _eAlignment, _bEnabled);
-	m_oVecUIElementPtrs.push_back(poText);
+	m_oVecManagerUIElementPtrs.push_back(poText);
 
 	return poText;
 }

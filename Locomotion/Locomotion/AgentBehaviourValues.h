@@ -1,4 +1,14 @@
-#pragma once
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : AgentBehaviourValues.h
+Description : Static class containing all behaviour values for AI agents to access.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
 
 class CAgentBehaviourValues
 {
@@ -13,8 +23,16 @@ public:
 		Pursuit,
 	};
 
+	/// <summary>
+	/// Sets up the default values for agents to use matching the given behaviour type.
+	/// </summary>
+	/// <param name="_eBehaviour:">The behaviour type to use.</param>
 	static void InitBehaviour(EBehaviour _eBehaviour);
 
+	/// <summary>
+	/// Returns the current selected behaviour.
+	/// </summary>
+	/// <returns>The current selected behaviour.</returns>
 	static EBehaviour GetSelectedBehaviour();
 
 	#pragma region Get/Set
@@ -35,13 +53,6 @@ public:
 	static float GetSeekStrength();
 	static void SetSeekMaxSteerForce(float _fMaxSteerForce);
 	static float GetSeekMaxSteerForce();
-
-	static void SetFleeWeighting(float _fWeighting);
-	static float GetFleeWeighting();
-	static void SetFleeStrength(float _fStrength);
-	static float GetFleeStrength();
-	static void SetFleeMaxSteerForce(float _fMaxSteerForce);
-	static float GetFleeMaxSteerForce();
 
 	static void SetWanderWeighting(float _fWeighting);
 	static float GetWanderWeighting();
@@ -98,10 +109,6 @@ private:
 	static float m_fSeekStrength;
 	static float m_fSeekMaxSteerForce;
 
-	static float m_fFleeWeighting;
-	static float m_fFleeStrength;
-	static float m_fFleeMaxSteerForce;
-
 	static float m_fWanderWeighting;
 	static float m_fWanderStrength;
 	static float m_fWanderMaxSteerForce;
@@ -124,6 +131,9 @@ private:
 	static float m_fAlignmentMaxSteerForce;
 	static float m_fAlignmentNeighbourhoodRadius;
 
+	/// <summary>
+	/// Resets all weighting values of each behaviour to 0 and closes all behaviour UI panels.
+	/// </summary>
 	static void ResetAllValues();
 
 	static void InitArrivalBehaviour();

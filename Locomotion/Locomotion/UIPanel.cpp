@@ -1,4 +1,29 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : UIPanel.cpp
+Description : Contains function definitions for UIPanel.h.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
+
 #include "UIPanel.h"
+
+CUIPanel::~CUIPanel()
+{
+	for (size_t i = 0; i < m_oVecButtonPtrs.size(); i++)
+	{
+		delete m_oVecButtonPtrs[i];
+	}
+
+	for (size_t i = 0; i < m_oVecTextPtrs.size(); i++)
+	{
+		delete m_oVecTextPtrs[i];
+	}
+}
 
 void CUIPanel::Update()
 {

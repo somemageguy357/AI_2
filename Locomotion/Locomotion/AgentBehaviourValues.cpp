@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : AgentBehaviourValues.cpp
+Description : Contains function definitions for AgentBehaviourValues.h.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
+
 #include "AgentBehaviourValues.h"
 #include "AgentManager.h"
 #include "UIManager.h"
@@ -17,10 +29,6 @@ float CAgentBehaviourValues::m_fArrivalStoppingRadius = 0.0f;
 float CAgentBehaviourValues::m_fSeekWeighting = 0.0f;
 float CAgentBehaviourValues::m_fSeekStrength = 0.0f;
 float CAgentBehaviourValues::m_fSeekMaxSteerForce = 0.0f;
-
-float CAgentBehaviourValues::m_fFleeWeighting = 0.0f;
-float CAgentBehaviourValues::m_fFleeStrength = 0.0f;
-float CAgentBehaviourValues::m_fFleeMaxSteerForce = 0.0f;
 
 float CAgentBehaviourValues::m_fWanderWeighting = 0.0f;
 float CAgentBehaviourValues::m_fWanderStrength = 0.0f;
@@ -76,6 +84,8 @@ void CAgentBehaviourValues::InitBehaviour(EBehaviour _eBehaviour)
 	}
 
 	m_eSelectedBehaviour = _eBehaviour;
+
+	//Set up the UI display for the chosen behaviour.
 	CUIManager::SetAgentSpeedText(m_fAgentSpeedMultiplier);
 	CUIManager::PositionPanels();
 }
@@ -88,7 +98,7 @@ CAgentBehaviourValues::EBehaviour CAgentBehaviourValues::GetSelectedBehaviour()
 void CAgentBehaviourValues::ResetAllValues()
 {
 	CUIManager::CloseAllPanels();
-	CMouseCircle::GetInstance()->SetEnabled(false);
+	CMouseCircle::GetInstance()->SetEnabled(false); //The visual representation of the agent's Seek and Arrival target.
 
 	m_fArrivalWeighting = 0.0f;
 	m_fSeekWeighting = 0.0f;
@@ -313,37 +323,6 @@ void CAgentBehaviourValues::SetSeekMaxSteerForce(float _fMaxSteerForce)
 float CAgentBehaviourValues::GetSeekMaxSteerForce()
 {
 	return m_fSeekMaxSteerForce;
-}
-
-//---------------------------------------------------------------------------------------------FLEE
-void CAgentBehaviourValues::SetFleeWeighting(float _fWeighting)
-{
-	m_fFleeWeighting = CMath::Clamp(_fWeighting, 0.0f, 1.0f);
-}
-
-float CAgentBehaviourValues::GetFleeWeighting()
-{
-	return m_fFleeWeighting;
-}
-
-void CAgentBehaviourValues::SetFleeStrength(float _fStrength)
-{
-	m_fFleeStrength = _fStrength;
-}
-
-float CAgentBehaviourValues::GetFleeStrength()
-{
-	return m_fFleeStrength;
-}
-
-void CAgentBehaviourValues::SetFleeMaxSteerForce(float _fMaxSteerForce)
-{
-	m_fFleeMaxSteerForce = _fMaxSteerForce;
-}
-
-float CAgentBehaviourValues::GetFleeMaxSteerForce()
-{
-	return m_fFleeMaxSteerForce;
 }
 
 //---------------------------------------------------------------------------------------------WANDER

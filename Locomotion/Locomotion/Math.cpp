@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : Math.cpp
+Description : Contains function definitions for Math.h.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
+
 #include "Math.h"
 
 #include <iostream>
@@ -10,6 +22,7 @@ float CMath::RandomRange(float _fMin, float _fMax)
 {
 	float fRange = _fMax - _fMin;
 
+	//Values are multiplied by 1000 too add more precision.
 	float fValue = (float)(rand() % ((int)fRange * 1000) + ((int)_fMin * 1000));
 
 	fValue /= 1000;

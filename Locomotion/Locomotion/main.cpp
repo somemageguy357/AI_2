@@ -58,7 +58,7 @@ int main()
 			CAgentManager::Update(bIsClicking);
 
 			//----------LATE UPDATE----------
-			CAgentManager::LateUpdate(); //for gizmo positions.
+			CAgentManager::LateUpdate(); //for gizmo positions and rendering.
 
 			//----------RENDER----------
 			CUIManager::Render();

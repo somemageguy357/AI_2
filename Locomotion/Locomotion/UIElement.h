@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : UIElement.h
+Description : Base class for all UI elements.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
+
 #pragma once
 #include "SFML/Graphics.hpp"
 
@@ -25,6 +37,10 @@ public:
 
 	virtual void SetAlignment(EAlignment _eAlignment) = 0;
 
+	/// <summary>
+	/// Returns the anchor alignment value of the element.
+	/// </summary>
+	/// <returns>The anchor alignment value of the element.</returns>
 	EAlignment GetAlignment();
 
 	/// <summary>
@@ -33,6 +49,10 @@ public:
 	/// <param name="_bEnabled:">The new enabled state of the button.</param>
 	virtual void SetEnabled(bool _bEnabled);
 
+	/// <summary>
+	/// Returns the enabled state of the element.
+	/// </summary>
+	/// <returns>The enabled state of the element.</returns>
 	bool GetEnabled();
 
 protected:

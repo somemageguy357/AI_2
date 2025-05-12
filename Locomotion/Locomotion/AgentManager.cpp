@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : AgentManager.cpp
+Description : Contains function definitions for AgentManager.h.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
+
 #include "AgentManager.h"
 #include "WindowManager.h"
 #include "AgentBehaviourValues.h"
@@ -11,6 +23,7 @@ std::vector<CAgent*> CAgentManager::m_oVecAgentPtrs;
 
 void CAgentManager::Update(bool _bIsClicking)
 {
+	//Allows a new agent to be created within the boundary at the current mouse position. Only possible if the Wander behaviour has been selected.
 	if (_bIsClicking == true && CAgentBehaviourValues::GetSelectedBehaviour() == CAgentBehaviourValues::EBehaviour::Wander)
 	{
 		sf::Vector2i v2iMousePosition = sf::Mouse::getPosition(*CWindowManager::GetWindow());
@@ -24,6 +37,7 @@ void CAgentManager::Update(bool _bIsClicking)
 		}
 	}
 
+	//Updates all agents.
 	for (size_t i = 0; i < m_oVecAgentPtrs.size(); i++)
 	{
 		m_oVecAgentPtrs[i]->Update();

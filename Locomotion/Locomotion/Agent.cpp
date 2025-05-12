@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name : Agent.cpp
+Description : Contains function definitions for Agent.h.
+Author : Connor Galvin
+Mail : Connor.Galvin@mds.ac.nz
+**************************************************************************/
+
 #include "Agent.h"
 #include "WindowManager.h"
 #include "AgentManager.h"
@@ -47,8 +59,6 @@ void CAgent::Update()
 {
 	if (m_bEnabled == true)
 	{
-		//perform behaviour
-
 		if (CAgentBehaviourValues::GetArrivalWeighting() > 0.01f)
 		{
 			Arrival();
@@ -89,6 +99,7 @@ void CAgent::LateUpdate()
 {
 	if (m_bEnabled == true)
 	{
+		//Draw all required gizmos. Done in LateUpdate() instead of Update() as all agents will be at their final position by this point.
 		if (CAgentBehaviourValues::GetArrivalWeighting() > 0.0f)
 		{
 			m_oGizmos.Arrival(m_oShape.getPosition(), m_v2fVelocity, m_v2fArrivalDesiredVelocity, CMouseCircle::GetInstance()->GetPosition(), CAgentBehaviourValues::GetArrivalStoppingRadius());
@@ -138,21 +149,6 @@ void CAgent::ResetVelocity()
 	m_v2fVelocity = { 0.0f, 0.0f };
 }
 
-void CAgent::SetPursuitTarget(bool _bIsTarget)
-{
-	m_bPursuitTarget = _bIsTarget;
-
-	if (m_bPursuitTarget == true)
-	{
-		m_oShape.setFillColor(sf::Color::Cyan);
-	}
-
-	else
-	{
-		m_oShape.setFillColor(sf::Color::White);
-	}
-}
-
 void CAgent::Arrival()
 {
 	sf::Vector2f v2fTargetPosition = CMouseCircle::GetInstance()->GetPosition();
@@ -162,22 +158,20 @@ void CAgent::Arrival()
 	float fDistance = CMath::GetMagnitude(m_v2fArrivalDesiredVelocity);
 	float fStoppingRadius = CAgentBehaviourValues::GetArrivalStoppingRadius();
 
+	//If the distance between the agent and the target is within the stopping radius: reduce the desired velocity by an equal ratio.
 	if (fDistance < fStoppingRadius)
 	{
 		m_v2fArrivalDesiredVelocity = CMath::Normalize(m_v2fArrivalDesiredVelocity) * m_fMaxSpeed * (fDistance / fStoppingRadius);
 	}
 
+	//Else: desired velocity is at full speed.
 	else
 	{
 		m_v2fArrivalDesiredVelocity = CMath::Normalize(m_v2fArrivalDesiredVelocity) * m_fMaxSpeed;
 	}
 
-	sf::Vector2f v2fSteerForce = m_v2fArrivalDesiredVelocity - m_v2fVelocity;
-
-	v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetArrivalMaxSteerForce());
-
-	m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetArrivalStrength() * CAgentBehaviourValues::GetArrivalWeighting() * CTimeManager::GetDeltaTime();
-	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
+	//Calculate steer force and velocity.
+	CalculateSteerVelocity(m_v2fArrivalDesiredVelocity, CAgentBehaviourValues::GetArrivalMaxSteerForce(), CAgentBehaviourValues::GetArrivalStrength(), CAgentBehaviourValues::GetArrivalWeighting());
 }
 
 void CAgent::Seek(sf::Vector2f _v2fTargetPosition)
@@ -186,46 +180,31 @@ void CAgent::Seek(sf::Vector2f _v2fTargetPosition)
 
 	m_v2fSeekDesiredVelocity = CMath::Normalize(v2fOffset) * m_fMaxSpeed;
 
-	//--
-
-	sf::Vector2f v2fSteerForce = m_v2fSeekDesiredVelocity - m_v2fVelocity;
-
-	v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetSeekMaxSteerForce());
-
-	m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetSeekStrength() * CAgentBehaviourValues::GetSeekWeighting() * CTimeManager::GetDeltaTime();
-	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
-}
-
-void CAgent::Pursuit()
-{
-	sf::Vector2f v2fEstimatedPos = { 0.0f, 0.0f };
+	//Calculate steer force and velocity.
+	CalculateSteerVelocity(m_v2fSeekDesiredVelocity, CAgentBehaviourValues::GetSeekMaxSteerForce(), CAgentBehaviourValues::GetSeekStrength(), CAgentBehaviourValues::GetSeekWeighting());
 }
 
 void CAgent::Wander()
 {
 	m_fWanderAdjustmentTimer -= CTimeManager::GetDeltaTime();
 
+	//Sets the target wander angle after the timer has reached 0.
 	if (m_fWanderAdjustmentTimer < 0.0f)
 	{
-		m_fTargetWanderAngle += CMath::RandomRange(-1.0f, 1.0f) * /*CAgentBehaviourValues::GetWanderAngleRandomStrength()*/ 2.0f;
-		m_fWanderAdjustmentTimer = 1.0f; //reset timer.
+		m_fTargetWanderAngle += CMath::RandomRange(-1.0f, 1.0f) * 2.0f;
+		m_fWanderAdjustmentTimer = 1.0f;
 	}
 
 	m_fWanderAngle = CMath::DegToRad() * CMath::Lerp(CMath::RadToDeg() * m_fWanderAngle, CMath::RadToDeg() * m_fTargetWanderAngle, CTimeManager::GetDeltaTime());
 
 	sf::Vector2f v2fCirclePosition = m_oShape.getPosition() + CMath::Normalize(m_v2fVelocity) * CAgentBehaviourValues::GetWanderDistance();
-	
-	//--
 
 	float fCalcAngle = m_fWanderAngle + CMath::PI() * 0.5f;
 	sf::Vector2f v2fWanderDirection = { cos(fCalcAngle), sin(fCalcAngle) };
 
-	//--
-
+	//Calculates the steer force direction, then uses it to determine the added velocity.
 	sf::Vector2f v2fActualTarget = v2fCirclePosition + v2fWanderDirection * CAgentBehaviourValues::GetWanderRadius();
 	sf::Vector2f v2fSteerForce = v2fActualTarget - m_oShape.getPosition();
-
-	//--
 
 	v2fSteerForce -= m_v2fVelocity;
 	v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetWanderMaxSteerForce());
@@ -269,13 +248,8 @@ void CAgent::Separation()
 		v2fDifAve = CMath::Normalize(v2fDifAve) * m_fMaxSpeed;
 	}
 
-	//--
-
-	sf::Vector2f v2fSteerForce = v2fDifAve - m_v2fVelocity;
-	v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetSeparationMaxSteerForce());
-
-	m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetSeparationStrength() * CAgentBehaviourValues::GetSeparationWeighting() * CTimeManager::GetDeltaTime();
-	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
+	//Calculate steer force and velocity.
+	CalculateSteerVelocity(v2fDifAve, CAgentBehaviourValues::GetSeparationMaxSteerForce(), CAgentBehaviourValues::GetSeparationStrength(), CAgentBehaviourValues::GetSeparationWeighting());
 }
 
 void CAgent::Cohesion()
@@ -309,13 +283,8 @@ void CAgent::Cohesion()
 		m_v2fCohesionCenterOfMass = v2fPosAve /= (float)iCount;
 		sf::Vector2f v2fDesiredVelocity = CMath::Normalize(m_v2fCohesionCenterOfMass - v2fSelfPos) * m_fMaxSpeed;
 
-		//--
-
-		sf::Vector2f v2fSteerForce = v2fDesiredVelocity - m_v2fVelocity;
-		v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetCohesionMaxSteerForce());
-
-		m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetCohesionStrength() * CAgentBehaviourValues::GetCohesionWeighting() * CTimeManager::GetDeltaTime();
-		m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
+		//Calculate steer force and velocity.
+		CalculateSteerVelocity(v2fDesiredVelocity, CAgentBehaviourValues::GetCohesionMaxSteerForce(), CAgentBehaviourValues::GetCohesionStrength(), CAgentBehaviourValues::GetCohesionWeighting());
 	}
 
 	else
@@ -356,19 +325,13 @@ void CAgent::Alignment()
 		v2fVelocityAve /= (float)iCount;
 		v2fVelocityAve = CMath::Normalize(v2fVelocityAve) * m_fMaxSpeed;
 
-		//--
-
-		sf::Vector2f v2fSteerForce = v2fVelocityAve - m_v2fVelocity;
-		v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, CAgentBehaviourValues::GetAlignmentMaxSteerForce());
-
-		m_v2fVelocity += v2fSteerForce * CAgentBehaviourValues::GetAlignmentStrength() * CAgentBehaviourValues::GetAlignmentWeighting() * CTimeManager::GetDeltaTime();
-		m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
+		//Calculate steer force and velocity.
+		CalculateSteerVelocity(v2fVelocityAve, CAgentBehaviourValues::GetAlignmentMaxSteerForce(), CAgentBehaviourValues::GetAlignmentStrength(), CAgentBehaviourValues::GetAlignmentWeighting());
 	}
 }
 
 void CAgent::Translate()
 {
-	//std::cout << "velocity: " << m_v2fVelocity.x << ", " << m_v2fVelocity.y << std::endl;
 	//Update position.
 	m_oShape.setPosition(m_oShape.getPosition() + (m_v2fVelocity * CAgentBehaviourValues::GetAgentSpeedMultiplier() * CTimeManager::GetDeltaTime()));
 
@@ -407,4 +370,14 @@ void CAgent::CheckBoundary()
 	{
 		m_oShape.setPosition({ v2fPosition.x, oBoundary.top + oBoundary.height });
 	}
+}
+
+void CAgent::CalculateSteerVelocity(sf::Vector2f _v2fDesiredVelocity, float _fMaxSteerForce, float _fStrength, float _fWeighting)
+{
+	sf::Vector2f v2fSteerForce = _v2fDesiredVelocity - m_v2fVelocity;
+
+	v2fSteerForce = CMath::ClampMagnitude(v2fSteerForce, _fMaxSteerForce);
+
+	m_v2fVelocity += v2fSteerForce * _fStrength * _fWeighting * CTimeManager::GetDeltaTime();
+	m_v2fVelocity = CMath::ClampMagnitude(m_v2fVelocity, m_fMaxSpeed);
 }
