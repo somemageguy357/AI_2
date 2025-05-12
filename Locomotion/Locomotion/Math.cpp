@@ -10,7 +10,7 @@ float CMath::RandomRange(float _fMin, float _fMax)
 {
 	float fRange = _fMax - _fMin;
 
-	float fValue = rand() % ((int)fRange * 1000) + ((int)_fMin * 1000);
+	float fValue = (float)(rand() % ((int)fRange * 1000) + ((int)_fMin * 1000));
 
 	fValue /= 1000;
 
@@ -26,7 +26,7 @@ void CMath::Normalize(sf::Vector2f* _v2fVector)
 {
 	sf::Vector2f v2fCopy = *_v2fVector;
 
-	float fMag = sqrt(pow(_v2fVector->x, 2) + pow(_v2fVector->y, 2));
+	float fMag = (float)sqrt(pow(_v2fVector->x, 2) + pow(_v2fVector->y, 2));
 
 	if (fMag == 0)
 	{
@@ -38,7 +38,7 @@ void CMath::Normalize(sf::Vector2f* _v2fVector)
 
 sf::Vector2f CMath::Normalize(const sf::Vector2f _kv2fVector)
 {
-	float fMag = sqrt(pow(_kv2fVector.x, 2) + pow(_kv2fVector.y, 2));
+	float fMag = (float)sqrt(pow(_kv2fVector.x, 2) + pow(_kv2fVector.y, 2));
 
 	if (fMag == 0)
 	{
@@ -52,12 +52,12 @@ sf::Vector2f CMath::Normalize(const sf::Vector2f _kv2fVector)
 
 float CMath::GetMagnitude(sf::Vector2f _v2fVector)
 {
-	return sqrt(pow(_v2fVector.x, 2) + pow(_v2fVector.y, 2));
+	return (float)sqrt(pow(_v2fVector.x, 2) + pow(_v2fVector.y, 2));
 }
 
 float CMath::Distance(sf::Vector2f _v2fPoint1, sf::Vector2f _v2fPoint2)
 {
-	return sqrt(pow(_v2fPoint1.x - _v2fPoint2.x, 2) + pow(_v2fPoint1.y - _v2fPoint2.y, 2));
+	return (float)sqrt(pow(_v2fPoint1.x - _v2fPoint2.x, 2) + pow(_v2fPoint1.y - _v2fPoint2.y, 2));
 }
 
 float CMath::Abs(float _fValue)

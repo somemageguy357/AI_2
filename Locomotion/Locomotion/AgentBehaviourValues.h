@@ -5,6 +5,7 @@ class CAgentBehaviourValues
 public:
 	enum class EBehaviour
 	{
+		n,
 		Arrival,
 		Flock,
 		Seek,
@@ -13,6 +14,8 @@ public:
 	};
 
 	static void InitBehaviour(EBehaviour _eBehaviour);
+
+	static EBehaviour GetSelectedBehaviour();
 
 	#pragma region Get/Set
 	static float GetAgentSpeedMultiplier();
@@ -82,6 +85,8 @@ public:
 	#pragma endregion
 
 private:
+	static EBehaviour m_eSelectedBehaviour;
+
 	static float m_fAgentSpeedMultiplier;
 
 	static float m_fArrivalWeighting;

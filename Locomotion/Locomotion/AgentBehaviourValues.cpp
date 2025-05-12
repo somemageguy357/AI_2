@@ -5,6 +5,8 @@
 #include "MouseCircle.h"
 
 #pragma region Static Variable Initialization
+CAgentBehaviourValues::EBehaviour CAgentBehaviourValues::m_eSelectedBehaviour = CAgentBehaviourValues::EBehaviour::n;
+
 float CAgentBehaviourValues::m_fAgentSpeedMultiplier = 0.0f;
 
 float CAgentBehaviourValues::m_fArrivalWeighting = 0.0f;
@@ -73,8 +75,14 @@ void CAgentBehaviourValues::InitBehaviour(EBehaviour _eBehaviour)
 		InitWanderBehaviour();
 	}
 
+	m_eSelectedBehaviour = _eBehaviour;
 	CUIManager::SetAgentSpeedText(m_fAgentSpeedMultiplier);
 	CUIManager::PositionPanels();
+}
+
+CAgentBehaviourValues::EBehaviour CAgentBehaviourValues::GetSelectedBehaviour()
+{
+	return m_eSelectedBehaviour;
 }
 
 void CAgentBehaviourValues::ResetAllValues()

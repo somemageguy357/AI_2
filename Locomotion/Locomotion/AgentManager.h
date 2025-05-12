@@ -6,7 +6,7 @@
 class CAgentManager
 {
 public:
-	static void Update();
+	static void Update(bool _bIsClicking);
 
 	static void LateUpdate();
 
@@ -14,7 +14,7 @@ public:
 
 	static void InitAgentManager();
 
-	static void SpawnAgents(int _iCount);
+	static void SpawnAgents(unsigned int _uiCount);
 
 	static std::vector<CAgent*>* GetAgents();
 
@@ -27,8 +27,12 @@ private:
 
 	static std::vector<CAgent*> m_oVecAgentPtrs;
 
+	static unsigned int m_uiActiveAgents;
+
 	CAgentManager() = delete;
 	~CAgentManager() = delete;
 
 	static void PositionAgents(int _iCount);
+
+	static void SpawnSingleAgent(sf::Vector2f _v2fPosition);
 };

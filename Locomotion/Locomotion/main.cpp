@@ -19,9 +19,9 @@ Mail : Connor.Galvin@mds.ac.nz
 
 #include <iostream>
 
-void main()
+int main()
 {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
 	sf::RenderWindow* poMainWindow = CWindowManager::GetWindow({ 1280, 720 });
 
@@ -55,7 +55,7 @@ void main()
 			CTimeManager::Update();
 			CUIManager::Update(bIsClicking);
 			CMouseCircle::GetInstance()->Update();
-			CAgentManager::Update();
+			CAgentManager::Update(bIsClicking);
 
 			//----------LATE UPDATE----------
 			CAgentManager::LateUpdate(); //for gizmo positions.
@@ -71,4 +71,6 @@ void main()
 
 	CAgentManager::Destroy();
 	CUIManager::Destroy();
+
+	return 0;
 }

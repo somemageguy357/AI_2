@@ -242,7 +242,7 @@ void CAgent::Separation()
 
 	std::vector<CAgent*>* poVecAgentPtrs = CAgentManager::GetAgents();
 
-	for (int i = 0; i < poVecAgentPtrs->size(); i++)
+	for (size_t i = 0; i < poVecAgentPtrs->size(); i++)
 	{
 		if ((*poVecAgentPtrs)[i] == this)
 		{
@@ -286,7 +286,7 @@ void CAgent::Cohesion()
 
 	std::vector<CAgent*>* poVecAgentPtrs = CAgentManager::GetAgents();
 
-	for (int i = 0; i < poVecAgentPtrs->size(); i++)
+	for (size_t i = 0; i < poVecAgentPtrs->size(); i++)
 	{
 		if ((*poVecAgentPtrs)[i] == this && CAgentBehaviourValues::GetCohesionIncludeSelf() == false)
 		{
@@ -332,7 +332,7 @@ void CAgent::Alignment()
 
 	std::vector<CAgent*>* poVecAgentPtrs = CAgentManager::GetAgents();
 
-	for (int i = 0; i < poVecAgentPtrs->size(); i++)
+	for (size_t i = 0; i < poVecAgentPtrs->size(); i++)
 	{
 		if ((*poVecAgentPtrs)[i] == this)
 		{

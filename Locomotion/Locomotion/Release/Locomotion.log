@@ -1,7 +1,27 @@
-﻿  main.cpp
-C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Locomotion\main.cpp(16,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+﻿  Agent.cpp
+  AgentBehaviourValues.cpp
+  AgentManager.cpp
+  Gizmos.cpp
+  main.cpp
+  Math.cpp
+  MouseCircle.cpp
+  TimeManager.cpp
+  UIAlignmentPanel.cpp
+  UIArrivalPanel.cpp
+  UIButton.cpp
+  UICohesionPanel.cpp
+  UIElement.cpp
+  UIManager.cpp
+  UIPanel.cpp
+  UISeekPanel.cpp
+  UISeparationPanel.cpp
+  UIText.cpp
+  UIWanderPanel.cpp
+  Utilities.cpp
+  Compiling...
+  WindowManager.cpp
   Generating code
   Previous IPDB not found, fall back to full compilation.
-  All 6 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 723 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   Locomotion.vcxproj -> C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Release\Locomotion.exe

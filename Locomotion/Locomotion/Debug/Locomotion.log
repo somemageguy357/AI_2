@@ -1,2 +1,25 @@
-﻿  AgentBehaviourValues.cpp
+﻿  Agent.cpp
+  AgentBehaviourValues.cpp
+  AgentManager.cpp
+  Gizmos.cpp
+  main.cpp
+  Math.cpp
+  MouseCircle.cpp
+  TimeManager.cpp
+  UIAlignmentPanel.cpp
+  UIArrivalPanel.cpp
+  UIButton.cpp
+  UICohesionPanel.cpp
+  UIElement.cpp
+  UIManager.cpp
+  UIPanel.cpp
+  UISeekPanel.cpp
+  UISeparationPanel.cpp
+  UIText.cpp
+  UIWanderPanel.cpp
+  Utilities.cpp
+  Generating Code...
+  Compiling...
+  WindowManager.cpp
+  Generating Code...
   Locomotion.vcxproj -> C:\Users\Administrator\Desktop\course\Semester3\AI\Assignment2_Repo\Locomotion\Debug\Locomotion.exe

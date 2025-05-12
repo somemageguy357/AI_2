@@ -60,10 +60,8 @@ void CUIManager::InitUI()
 	CreateText(20, { 60, 20 }, "Behaviours", sf::Color::White, CUIElement::EAlignment::CenterMiddle, true);
 	CreateButton({ 100, 30 }, { 10, 50 }, CUIButton::EButtonType::AIArrival, CUIElement::EAlignment::TopLeft, 20, "Arrival", true);
 	CreateButton({ 100, 30 }, { 10, 90 }, CUIButton::EButtonType::AISeek, CUIElement::EAlignment::TopLeft, 20, "Seek", true);
-	CreateButton({ 100, 30 }, { 10, 130 }, CUIButton::EButtonType::AIPursuit, CUIElement::EAlignment::TopLeft, 20, "Pursuit", true);
-	CreateButton({ 100, 30 }, { 10, 170 }, CUIButton::EButtonType::AIWander, CUIElement::EAlignment::TopLeft, 20, "Wander", true);
-	CreateButton({ 100, 30 }, { 10, 210 }, CUIButton::EButtonType::AIFlock, CUIElement::EAlignment::TopLeft, 20, "Flock", true);
-	CreateButton({ 100, 30 }, { 10, 250 }, CUIButton::EButtonType::n, CUIElement::EAlignment::TopLeft, 20, "NULL", true);
+	CreateButton({ 100, 30 }, { 10, 130 }, CUIButton::EButtonType::AIWander, CUIElement::EAlignment::TopLeft, 20, "Wander", true);
+	CreateButton({ 100, 30 }, { 10, 170 }, CUIButton::EButtonType::AIFlock, CUIElement::EAlignment::TopLeft, 20, "Flock", true);
 
 	CreateText(20, { 60, 320 }, "Gizmos", sf::Color::White, CUIElement::EAlignment::CenterMiddle, true);
 	CreateButton({ 100, 30 }, { 10, 350 }, CUIButton::EButtonType::ToggleGizmos, CUIElement::EAlignment::TopLeft, 20, "Enable", true);
@@ -169,7 +167,7 @@ void CUIManager::PositionPanels()
 		if (m_oVecPanelPtrs[i]->GetEnabled() == true)
 		{
 			m_oVecPanelPtrs[i]->ResetPosition();
-			m_oVecPanelPtrs[i]->RepositionPanel(iPanelsOpen * 300);
+			m_oVecPanelPtrs[i]->RepositionPanel((float)iPanelsOpen * 300.0f);
 			iPanelsOpen += 1;
 		}
 	}
